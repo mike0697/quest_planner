@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Quest Planner'),
     );
   }
 }
@@ -86,40 +86,138 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      body: Widget028(),
+    );
+  }
+}
+
+
+//menu
+
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Schermata Home'),
+    );
+  }
+}
+
+class MenuScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(padding: EdgeInsets.all(20),
+          child: Column(children: [Container( width: double.infinity,
+              child:
+              Card(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Titolo
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text(
+                        'Quest welcome 1',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+
+                    // Descrizione
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        'La tua descrizione qui...',
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                    ),
+
+                    // Spazio tra la descrizione e i bottoni
+                    SizedBox(height: 16.0),
+
+                    // Bottoni
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            // Logica del primo pulsante
+                          },
+                          child: Text('Edit'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Logica del secondo pulsante
+                          },
+                          child: Text('Esegui'),
+                        ),
+                      ],
+                    ),
+                    Padding(padding: EdgeInsets.all(10)),
+                  ],
+                ),
+              )
+          )]
+            ,)
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class ProfileScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Schermata Profilo'),
+    );
+  }
+}
+
+class Widget028 extends StatefulWidget {
+  const Widget028({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _Widget028State();
+}
+
+class _Widget028State extends State<Widget028> {
+  int _currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> body = [
+      HomeScreen(),
+      MenuScreen(),
+      ProfileScreen(),
+    ];
+
+    return Scaffold(
+      body: body[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (int newIndex) {
+          setState(() {
+            _currentIndex = newIndex;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            label: 'Home',
+            icon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            label: 'Menu',
+            icon: Icon(Icons.menu),
+          ),
+          BottomNavigationBarItem(
+            label: 'Profile',
+            icon: Icon(Icons.person),
+          ),
+        ],
+      ),
     );
   }
 }
