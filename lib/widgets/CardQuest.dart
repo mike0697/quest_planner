@@ -5,7 +5,9 @@ class CardQuest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container( width: double.infinity,
+    return Container(
+        width: double.infinity,
+        margin: const EdgeInsets.only(bottom: 8),
         child:
         Card(
           child: Column(

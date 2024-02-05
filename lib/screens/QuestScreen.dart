@@ -7,13 +7,13 @@ class QuestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(padding: EdgeInsets.all(20),
-          child: Column(children: [
-            CardQuest()
-          ]
-            ,)
-      ),
+    List<int> lista = [1,2,3,4,5,6,7,8,9,10];
+    return  ListView(
+      padding: EdgeInsets.all(8),
+      children: [
+        for(var i in lista)
+            CardQuest(),
+      ],
     );
   }
 }
