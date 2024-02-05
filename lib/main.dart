@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quest_planner/screens/HomeScreen.dart';
+import 'package:quest_planner/screens/ProfileScreen.dart';
+import 'package:quest_planner/screens/QuestScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,18 +58,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,87 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
 //menu
 
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Schermata Home'),
-    );
-  }
-}
-
-class MenuScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(padding: EdgeInsets.all(20),
-          child: Column(children: [Container( width: double.infinity,
-              child:
-              Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Titolo
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text(
-                        'Quest welcome 1',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0,
-                        ),
-                      ),
-                    ),
-
-                    // Descrizione
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(
-                        'La tua descrizione qui...',
-                        style: TextStyle(fontSize: 16.0),
-                      ),
-                    ),
-
-                    // Spazio tra la descrizione e i bottoni
-                    SizedBox(height: 16.0),
-
-                    // Bottoni
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            // Logica del primo pulsante
-                          },
-                          child: Text('Edit'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Logica del secondo pulsante
-                          },
-                          child: Text('Esegui'),
-                        ),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.all(10)),
-                  ],
-                ),
-              )
-          )]
-            ,)
-      ),
-    );
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Schermata Profilo'),
-    );
-  }
-}
 
 class Widget028 extends StatefulWidget {
   const Widget028({Key? key}) : super(key: key);
@@ -190,7 +100,7 @@ class _Widget028State extends State<Widget028> {
   Widget build(BuildContext context) {
     List<Widget> body = [
       HomeScreen(),
-      MenuScreen(),
+      QuestScreen(),
       ProfileScreen(),
     ];
 
@@ -209,7 +119,7 @@ class _Widget028State extends State<Widget028> {
             icon: Icon(Icons.home),
           ),
           BottomNavigationBarItem(
-            label: 'Menu',
+            label: 'Quest',
             icon: Icon(Icons.menu),
           ),
           BottomNavigationBarItem(
