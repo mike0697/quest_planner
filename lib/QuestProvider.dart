@@ -19,6 +19,8 @@ class Quest {
 }
 
 class QuestProvider extends ChangeNotifier {
+  String a = 'aaa';
+
   Quest _quest = new Quest(titolo: 'a', descrizione: 'descrizione',
       esperienza: 1, difficolta: 1, ricompensa: 1, id: 1);
 
