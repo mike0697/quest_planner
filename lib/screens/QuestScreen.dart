@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import '../widgets/CardQuest.dart';
+import 'package:provider/provider.dart';
+import 'package:quest_planner/providers/ListQuestProvider.dart';
+import '../widgets/CardQuest2.dart';
 
 class QuestScreen extends StatelessWidget {
   const QuestScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List<int> lista = [1,2,3,4,5,6,7,8,9,10];
-
-    return  ListView(
-      padding: EdgeInsets.all(8),
-      children: [
-        for(var i in lista)
-            CardQuest(),
-      ],
-    );
+    return ListView(
+          padding: const EdgeInsets.all(8),
+          children: [
+            for(int i = 0; i< context.watch<ListQuestProvider>().getLenght(); i++)
+              CardQuest2(quest: context.watch<ListQuestProvider>().currentQuest[i]),
+          ],
+        );
   }
 }

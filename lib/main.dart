@@ -1,18 +1,27 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quest_planner/QuestProvider.dart';
+import 'package:quest_planner/providers/ListQuestProvider.dart';
 import 'package:quest_planner/screens/HomeScreen.dart';
 import 'package:quest_planner/screens/ProfileScreen.dart';
 import 'package:quest_planner/screens/QuestScreen.dart';
 
 void main() {
+  runApp(MultiProvider(providers: [
+    //ChangeNotifierProvider(create: (context) => QuestProvider()),
+    ChangeNotifierProvider(create: (context) => ListQuestProvider())
+  ], child: const MyApp(),
+  ));
+
+  /*
   runApp(
     ChangeNotifierProvider<QuestProvider>(
       create: (context) => QuestProvider(),
       child: const MyApp(),
     ),
   );
+
+   */
 }
 
 class MyApp extends StatelessWidget {

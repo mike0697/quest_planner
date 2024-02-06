@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quest_planner/providers/ListQuestProvider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen ({super.key});
@@ -35,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(top: 20),
                 child: TextButton(
                 onPressed: () {
+                  context.read<ListQuestProvider>().initLista(titolo,descrizione);
                   print( '$titolo , $descrizione');
                 },
                   child: const Text('Salva', style: TextStyle(fontSize: 22,),)),
