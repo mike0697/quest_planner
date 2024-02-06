@@ -1,10 +1,20 @@
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quest_planner/QuestProvider.dart';
 import 'package:quest_planner/screens/HomeScreen.dart';
 import 'package:quest_planner/screens/ProfileScreen.dart';
 import 'package:quest_planner/screens/QuestScreen.dart';
 
+import 'StringProvider.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider<QuestProvider>(
+      create: (context) => QuestProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

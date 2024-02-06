@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../QuestProvider.dart';
 
 class CardQuest extends StatelessWidget {
   const CardQuest ({super.key});
 
+
   @override
   Widget build(BuildContext context) {
+    QuestProvider questProvider = Provider.of<QuestProvider>(context, listen: false);
+    // Accesso alla stringa
     return Container(
         width: double.infinity,
         margin: const EdgeInsets.only(bottom: 8),
@@ -14,11 +20,10 @@ class CardQuest extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Titolo
-              const Padding(
+              Padding(
                 padding: EdgeInsets.all(16.0),
-                child: Text(
-                  'Quest welcome 1',
-                  style: TextStyle(
+                child: Text(questProvider.currentQuest.titolo,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
                   ),
@@ -26,16 +31,16 @@ class CardQuest extends StatelessWidget {
               ),
 
               // Descrizione
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
-                  'La tua descrizione qui...',
-                  style: TextStyle(fontSize: 16.0),
+                  questProvider.currentQuest.descrizione,
+                  style: const TextStyle(fontSize: 16.0),
                 ),
               ),
 
               // Spazio tra la descrizione e i bottoni
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
 
               // Bottoni
               Row(
@@ -45,17 +50,17 @@ class CardQuest extends StatelessWidget {
                     onPressed: () {
                       // Logica del primo pulsante
                     },
-                    child: Text('Edit'),
+                    child: const Text('Edit'),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       // Logica del secondo pulsante
                     },
-                    child: Text('Esegui'),
+                    child: const Text('Esegui'),
                   ),
                 ],
               ),
-              Padding(padding: EdgeInsets.all(10)),
+              const Padding(padding: EdgeInsets.all(10)),
             ],
           ),
         )
