@@ -6,8 +6,6 @@ import 'package:quest_planner/screens/HomeScreen.dart';
 import 'package:quest_planner/screens/ProfileScreen.dart';
 import 'package:quest_planner/screens/QuestScreen.dart';
 
-import 'StringProvider.dart';
-
 void main() {
   runApp(
     ChangeNotifierProvider<QuestProvider>(
