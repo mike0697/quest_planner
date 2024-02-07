@@ -2,10 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/providers/ListQuestProvider.dart';
+import 'package:quest_planner/screens/AuthPage.dart';
 import 'package:quest_planner/screens/HomeScreen.dart';
 import 'package:quest_planner/screens/ProfileScreen.dart';
 import 'package:quest_planner/screens/QuestScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'Auth.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -31,24 +33,22 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Quest Planner'),
+      home: StreamBuilder(
+        stream: Auth().authStateChanges,
+        builder: (context, snapshot){
+          if(snapshot.hasData){
+            return const MyHomePage(title: 'Quest Planner');
+          } else{
+            return AuthPage();
+          }
+        },
+
+      ),
+
+
     );
   }
 }
@@ -72,6 +72,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Future<void> signOut() async{
+    await Auth().signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,12 +86,14 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
+
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
+        actions: [
+          IconButton(onPressed: (){
+            signOut();
+          }, icon: Icon(Icons.logout))
+        ],
+        
         title: Text(widget.title),
       ),
       body: Widget028(),
