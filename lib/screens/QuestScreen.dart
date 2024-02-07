@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/providers/ListQuestProvider.dart';
-import '../widgets/CardQuest2.dart';
+import '../widgets/CardQuest.dart';
 
 class QuestScreen extends StatelessWidget {
   const QuestScreen({super.key});
@@ -12,7 +12,7 @@ class QuestScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           children: [
             for(int i = 0; i< context.watch<ListQuestProvider>().getLenght(); i++)
-              CardQuest2(quest: context.watch<ListQuestProvider>().currentQuest[i]),
+              CardQuest(quest: context.watch<ListQuestProvider>().currentListQuest[i]),
           ],
         );
   }

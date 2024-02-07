@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:quest_planner/providers/QuestProvider.dart';
+
+import '../models/Quest.dart';
 
 
 class CardQuest extends StatelessWidget {
-  const CardQuest ({super.key});
-
-
+  const CardQuest ({super.key, required this.quest});
+  final Quest quest;
   @override
   Widget build(BuildContext context) {
     // Accesso alla stringa
-    return Consumer<QuestProvider>(
-      builder: (BuildContext context, QuestProvider value, Widget? child) {
         return Container(
             width: double.infinity,
             margin: const EdgeInsets.only(bottom: 8),
@@ -23,7 +20,7 @@ class CardQuest extends StatelessWidget {
                   // Titolo
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text(value.currentQuest.titolo,
+                    child: Text(quest.titolo,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0,
@@ -35,7 +32,7 @@ class CardQuest extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
-                      value.currentQuest.descrizione,
+                      quest.descrizione,
                       style: const TextStyle(fontSize: 16.0),
                     ),
                   ),
@@ -66,8 +63,5 @@ class CardQuest extends StatelessWidget {
               ),
             )
         );
-      },
-
-    );
   }
 }

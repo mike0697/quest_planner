@@ -7,15 +7,19 @@ class ListQuestProvider extends ChangeNotifier {
 
   static int index = 0;
   List<Quest> _listaVuota = [];
-  List<Quest> get currentQuest => _listaVuota;
+  List<Quest> get currentListQuest => _listaVuota;
 
-  void addQuest(Quest newQuest) {
-    _listaVuota.add(newQuest);
+  void removeQuestPosition(int count){
+    _listaVuota.removeAt(count);
     notifyListeners();
   }
 
-  void removeQuest(int index){
-    _listaVuota.removeAt(index);
+  void removeQuestId(int id) {
+    for (int i = 0; i < _listaVuota.length; i++) {
+      if (_listaVuota[i].id == id) {
+        _listaVuota.removeAt(i);
+      }
+    }
     notifyListeners();
   }
 
@@ -23,8 +27,8 @@ class ListQuestProvider extends ChangeNotifier {
     return _listaVuota.length;
   }
 
-  void initLista(String titolo, String desc){
-    Quest nuova = new Quest(titolo: titolo, descrizione: desc, esperienza: 1, difficolta: 1, ricompensa: 1, id: index);
+  void addQuest(String titolo, String desc, {double esp = 1, double dif = 1,int ric = 1}){
+    Quest nuova = new Quest(titolo: titolo, descrizione: desc, esperienza: esp, difficolta: dif, ricompensa: ric, id: index);
     _listaVuota.add(nuova);
     ++index;
     notifyListeners();

@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(top: 20),
                 child: TextButton(
                 onPressed: () {
-                  context.read<ListQuestProvider>().initLista(titolo,descrizione);
+                  context.read<ListQuestProvider>().addQuest(titolo,descrizione);
                   print( '$titolo , $descrizione');
                 },
                   child: const Text('Salva', style: TextStyle(fontSize: 22,),)),

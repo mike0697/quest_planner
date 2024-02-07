@@ -12,16 +12,6 @@ void main() {
     ChangeNotifierProvider(create: (context) => ListQuestProvider())
   ], child: const MyApp(),
   ));
-
-  /*
-  runApp(
-    ChangeNotifierProvider<QuestProvider>(
-      create: (context) => QuestProvider(),
-      child: const MyApp(),
-    ),
-  );
-
-   */
 }
 
 class MyApp extends StatelessWidget {
