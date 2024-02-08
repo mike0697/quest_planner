@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/providers/ListQuestProvider.dart';
+import 'package:quest_planner/providers/UserProvider.dart';
 import 'package:quest_planner/screens/AuthPage.dart';
 import 'package:quest_planner/screens/HomeScreen.dart';
 import 'package:quest_planner/screens/ProfileScreen.dart';
@@ -17,7 +18,7 @@ void main() async{
   );
 
   runApp(MultiProvider(providers: [
-    //ChangeNotifierProvider(create: (context) => QuestProvider()),
+    ChangeNotifierProvider(create: (context) => UserProvider()),
     ChangeNotifierProvider(create: (context) => ListQuestProvider())
   ], child: const MyApp(),
   ));

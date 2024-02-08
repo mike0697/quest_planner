@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quest_planner/providers/ListQuestProvider.dart';
+import 'package:quest_planner/providers/UserProvider.dart';
 
 import '../models/Quest.dart';
 
@@ -52,6 +55,8 @@ class CardQuest extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
+                          context.read<UserProvider>().addPunti(quest.ricompensa);
+                          context.read<ListQuestProvider>().removeQuestId(quest.id);
                           // Logica del secondo pulsante
                         },
                         child: const Text('Esegui'),
