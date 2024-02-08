@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:quest_planner/Cloud.dart';
 
 import '../Auth.dart';
 class AuthPage extends StatefulWidget {
@@ -30,6 +32,15 @@ class _AuthPageState extends State<AuthPage> {
     }
   }
 
+  Future<void> createUserCloud() async{
+    try{
+      await Cloud().registerUser(_email.text);
+    }on FirebaseException catch (error){
+      print(error.toString());
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,8 +61,12 @@ class _AuthPageState extends State<AuthPage> {
             decoration: const InputDecoration(label: Text('password')),
           ),
           ElevatedButton(onPressed: (){
-            isLogin ? sigIn() : createUser();
-
+            if(isLogin){
+              sigIn();
+            }else{
+              createUser();
+              createUserCloud();
+            }
           }, child: Text(isLogin ? 'Accedi' : 'registrati')),
 
           TextButton(onPressed: (){

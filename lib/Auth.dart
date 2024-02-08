@@ -17,4 +17,11 @@ class Auth{
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
+
+  String? getCurrentUserEmail(){
+    if(_firebaseAuth.currentUser != null)
+      return _firebaseAuth.currentUser!.email;
+    else
+      return null;
+  }
 }
