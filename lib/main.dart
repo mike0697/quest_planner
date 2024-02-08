@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quest_planner/Cloud.dart';
 import 'package:quest_planner/providers/ListQuestProvider.dart';
 import 'package:quest_planner/providers/UserProvider.dart';
 import 'package:quest_planner/screens/AuthPage.dart';
@@ -75,6 +76,22 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   Future<void> signOut() async{
     await Auth().signOut();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Chiama la funzione per aggiornare i dati del provider all'avvio dell'app
+    aggiornaPunteggio();
+  }
+  Future<void> aggiornaPunteggio() async {
+    int punteggio = await Cloud().getUserPoint();
+    int livello = await Cloud().getUserLevel();
+    context.read<UserProvider>().setPunti(punteggio);
+    context.read<UserProvider>().setLivello(livello);
+    //"Valore ottenuto da Firebase: $punteggio"
+
+
   }
 
   @override

@@ -27,6 +27,11 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setPunti(int punti){
+    _punti = punti;
+    notifyListeners();
+  }
+
   void saliDiLivello(){}
 
 

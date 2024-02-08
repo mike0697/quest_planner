@@ -1,3 +1,5 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:quest_planner/Auth.dart';
 
@@ -36,17 +38,42 @@ class Cloud{
       }
 
   //ottine il punteggio
-  Future<void> getUserPoint() async {
-    await db.collection("users").get().then((event) {
-      var punti;
-      for (var doc in event.docs) {
-        //print("${doc.id} => ${doc.data()}");
+  Future<int> getUserPoint() async {
+    var punti = 0; // Valore di default
+
+    try {
+      var snapshot = await db.collection("users").get();
+      for (var doc in snapshot.docs) {
         String email = doc.data()['email'];
-        if(email == Auth().getCurrentUserEmail()){
+        if (email == Auth().getCurrentUserEmail()) {
           punti = doc.data()['punti'];
-          print('punti : $punti');
+          break; // Esci dal ciclo se hai trovato l'utente
         }
       }
-    });
+    } catch (e) {
+      print("Errore durante il recupero dei dati da Firebase: $e");
+    }
+
+    return punti;
+  }
+
+  //ottine il livello
+  Future<int> getUserLevel() async {
+    var livello = 0; // Valore di default
+
+    try {
+      var snapshot = await db.collection("users").get();
+      for (var doc in snapshot.docs) {
+        String email = doc.data()['email'];
+        if (email == Auth().getCurrentUserEmail()) {
+          livello = doc.data()['livello'];
+          break; // Esci dal ciclo se hai trovato l'utente
+        }
+      }
+    } catch (e) {
+      print("Errore durante il recupero dei dati da Firebase: $e");
+    }
+
+    return livello;
   }
 }
