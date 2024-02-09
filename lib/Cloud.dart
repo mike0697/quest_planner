@@ -6,21 +6,6 @@ import 'package:quest_planner/Auth.dart';
 class Cloud{
   final FirebaseFirestore db  = FirebaseFirestore.instance;
 
-  void getStarted_addData() async {
-    // [START get_started_add_data_1]
-    // Create a new user with a first and last name
-    final user = <String, dynamic>{
-      "first": "Ada",
-      "last": "Lovelace",
-      "born": 1815
-    };
-
-    // Add a new document with a generated ID
-    db.collection("users").add(user).then((DocumentReference doc) =>
-        print('DocumentSnapshot added with ID: ${doc.id}'));
-    // [END get_started_add_data_1]
-  }
-
   //registra un nuovo utente
   Future<void> registerUser(String email) async {
       // [START get_started_add_data_1]
@@ -75,5 +60,35 @@ class Cloud{
     }
 
     return livello;
+  }
+
+  Future<void> updateLivelloPunti({ required int punti, required int livello}) async {
+    try {
+      // Recupera il riferimento al documento con la mail specificata
+      QuerySnapshot querySnapshot = await db
+          .collection('users')
+          .where('email', isEqualTo: Auth().getCurrentUserEmail())
+          .get();
+
+      // Verifica se è stata trovata almeno una corrispondenza
+      if (querySnapshot.docs.isNotEmpty) {
+        // Se ci sono più corrispondenze, puoi gestirle come necessario
+        // Qui viene presa solo la prima corrispondenza
+        String documentId = querySnapshot.docs.first.id;
+        DocumentReference documentReference = db.collection('users').doc(documentId);
+
+        print('ID del documento trovato: $documentId');
+        // Aggiorna il valore desiderato nel documento
+        await documentReference.update({
+          'livello': livello,
+          'punti': punti,
+          // Aggiungi altri campi da aggiornare se necessario
+        });
+
+        print('Dati aggiornati con successo.');
+      }
+    } catch (e) {
+      print('Errore durante l\'aggiornamento dei dati: $e');
+    }
   }
 }

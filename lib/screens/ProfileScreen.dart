@@ -16,6 +16,7 @@ class ProfileScreen extends StatelessWidget {
             const Text('Schermata Profilo',  style: TextStyle(fontSize: 22)),
             Text('Livello: ${context.watch<UserProvider>().livello}',  style: const TextStyle(fontSize: 22)),
             Text('Punti: ${context.watch<UserProvider>().punti}',  style: const TextStyle(fontSize: 22)),
+            ElevatedButton(onPressed: ()=> context.read<UserProvider>().resetPuntiLivello() , child: const Text('Reset')),
           ],
         ),
       ),

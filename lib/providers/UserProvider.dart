@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quest_planner/Cloud.dart';
 
 class UserProvider extends ChangeNotifier {
 
@@ -21,18 +22,25 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addPunti(int punti){
-    _punti += punti;
+  void addPunti(int point){
+    _punti += point;
     saliDiLivello();
+    Cloud().updateLivelloPunti(punti: punti, livello: livello);
     notifyListeners();
   }
 
-  void setPunti(int punti){
-    _punti = punti;
+  void setPunti(int point){
+    _punti = point;
     notifyListeners();
   }
 
   void saliDiLivello(){}
 
+  void resetPuntiLivello(){
+    _punti = 1;
+    _livello = 1;
+    Cloud().updateLivelloPunti(punti: punti, livello: livello);
+    notifyListeners();
+  }
 
 }
