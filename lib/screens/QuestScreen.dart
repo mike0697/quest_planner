@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/note.dart';
-import '../models/note_database.dart';
+import '../models/quest.dart';
+import '../providers/quest_database.dart';
 import '../providers/UserProvider.dart';
 
 class QuestScreen extends StatefulWidget {
@@ -14,22 +14,22 @@ class QuestScreen extends StatefulWidget {
 class _QuestScreenState extends State<QuestScreen> {
   //read notes
   void readNote() {
-    context.read<NoteDatabase>().fetchNotes();
+    context.read<QuestDatabase>().fetchNotes();
   }
   //update a note
-  void updateNote(Note note){
+  void updateNote(Quest note){
     note.titolo = 'text';
     //show dialog
-    context.read<NoteDatabase>().updateNote(note.id, note.titolo);
+    context.read<QuestDatabase>().updateNote(note.id, note.titolo);
     //todo aggiungere dialog box
   }
   //delete a note
   void deleteNote(int id){
-    context.read<NoteDatabase>().deleteNote(id);
+    context.read<QuestDatabase>().deleteNote(id);
   }
 
   //esegui note
-  void eseguiNote(Note note)
+  void eseguiNote(Quest note)
   {
     context.read<UserProvider>().addPunti(note.ricompensa);
     deleteNote(note.id);
@@ -43,11 +43,11 @@ class _QuestScreenState extends State<QuestScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    final noteDatabase = context.watch<NoteDatabase>();
-    List<Note> currentNotes = noteDatabase.currentNotes;
+    final noteDatabase = context.watch<QuestDatabase>();
+    List<Quest> currentNotes = noteDatabase.currentNotes;
       return ListView(
         children: [
-          for(int i = 0; i< context.watch<NoteDatabase>().currentNotes.length; i++)
+          for(int i = 0; i< context.watch<QuestDatabase>().currentNotes.length; i++)
             Card(
               child: ListTile(
                 title: Text(currentNotes[i].titolo),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quest_planner/models/note_database.dart';
+import 'package:quest_planner/providers/quest_database.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen ({super.key});
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           String titolo = data["titolo"];
                           String desc = data["descrizione"];
                           //crea una nota
-                          context.read<NoteDatabase>().addNote(titolo: titolo, desc: desc, punti: 1 );
+                          context.read<QuestDatabase>().addNote(titolo: titolo, desc: desc, punti: 1 );
                           // Pulisci i controller e resetta il form
                           _titoloController.clear();
                           _descrizioneController.clear();

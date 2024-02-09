@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/Cloud.dart';
-import 'package:quest_planner/models/note_database.dart';
+import 'package:quest_planner/providers/quest_database.dart';
 import 'package:quest_planner/providers/UserProvider.dart';
 import 'package:quest_planner/screens/AuthPage.dart';
 import 'package:quest_planner/screens/HomeScreen.dart';
@@ -19,11 +19,11 @@ void main() async{
     options: DefaultFirebaseOptions.currentPlatform,
   );
   //initialize note isar database
-  await NoteDatabase.initialize();
+  await QuestDatabase.initialize();
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => UserProvider()),
-    ChangeNotifierProvider(create: (context) => NoteDatabase()),
+    ChangeNotifierProvider(create: (context) => QuestDatabase()),
   ], child: const MyApp(),
   ));
 }
