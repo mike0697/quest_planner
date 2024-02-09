@@ -3,7 +3,8 @@ class Quest {
   String titolo;
   String descrizione;
   double esperienza;
-  double difficolta;
+  int difficolta;
+  int urgenza;
   int ricompensa;
   int id;
 
@@ -12,6 +13,7 @@ class Quest {
     required this.descrizione,
     required this.esperienza,
     required this.difficolta,
+    required this.urgenza,
     required this.ricompensa,
     required this.id,
   });

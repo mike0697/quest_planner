@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/Cloud.dart';
+import 'package:quest_planner/models/note_database.dart';
 import 'package:quest_planner/providers/ListQuestProvider.dart';
 import 'package:quest_planner/providers/UserProvider.dart';
 import 'package:quest_planner/screens/AuthPage.dart';
@@ -12,15 +13,19 @@ import 'package:firebase_core/firebase_core.dart';
 import 'Auth.dart';
 import 'firebase_options.dart';
 
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  //initialize note isar database
+  await NoteDatabase.initialize();
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => UserProvider()),
-    ChangeNotifierProvider(create: (context) => ListQuestProvider())
+    ChangeNotifierProvider(create: (context) => ListQuestProvider()),
+    ChangeNotifierProvider(create: (context) => NoteDatabase()),
   ], child: const MyApp(),
   ));
 }
@@ -77,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> signOut() async{
     await Auth().signOut();
   }
+
 
   @override
   void initState() {

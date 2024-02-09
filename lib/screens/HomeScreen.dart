@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quest_planner/models/note_database.dart';
 import 'package:quest_planner/providers/ListQuestProvider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,6 +14,14 @@ class _HomeScreenState extends State<HomeScreen> {
   final _formkey = GlobalKey<FormState>();
   String titolo = "";
   String descrizione = "";
+
+
+  void createNote(){
+      context.read<NoteDatabase>().addNote(titolo);
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -42,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                   child: const Text('Salva', style: TextStyle(fontSize: 22,),)),
               ),
+              ElevatedButton(onPressed: createNote, child: Text('Create Note isar')),
             ],
           ),
         ),);
