@@ -48,33 +48,44 @@ class _AuthPageState extends State<AuthPage> {
         title: const Text('Quest planner'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: Column(
-        children: [
-          Text('login'),
-          TextField(
-            controller: _email,
-            decoration: const InputDecoration(label: Text('email')),
-          ),
-          TextField(
-            controller: _password,
-            obscureText: true,
-            decoration: const InputDecoration(label: Text('password')),
-          ),
-          ElevatedButton(onPressed: (){
-            if(isLogin){
-              sigIn();
-            }else{
-              createUser();
-              createUserCloud();
-            }
-          }, child: Text(isLogin ? 'Accedi' : 'registrati')),
+      body: Padding(
+        padding: const EdgeInsets.all(25),
+        child: Column(
+          children: [
+            Text(isLogin ? 'Login' : 'Registrati'),
+            TextField(
+              textInputAction: TextInputAction.next,
+              keyboardType: TextInputType.emailAddress,
+              controller: _email,
+              decoration: const InputDecoration(label: Text('email')),
+            ),
+            TextField(
+              controller: _password,
+              obscureText: true,
+              decoration: const InputDecoration(label: Text('password')),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 25),
+              child: ElevatedButton(onPressed: (){
+                if(isLogin){
+                  sigIn();
+                }else{
+                  createUser();
+                  createUserCloud();
+                }
+              }, child: Text(isLogin ? 'Accedi' : 'registrati')),
+            ),
 
-          TextButton(onPressed: (){
-            setState(() {
-              isLogin = !isLogin;
-            });
-          }, child: Text(isLogin ? 'non hai un account? Registrati ' : 'Hai un account? Accedi')),
-        ],
+            Padding(
+              padding: const EdgeInsets.only(top: 25),
+              child: TextButton(onPressed: (){
+                setState(() {
+                  isLogin = !isLogin;
+                });
+              }, child: Text(isLogin ? 'non hai un account? Registrati ' : 'Hai un account? Accedi')),
+            ),
+          ],
+        ),
       ),
     );
   }

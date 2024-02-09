@@ -48,19 +48,21 @@ class _QuestScreenState extends State<QuestScreen> {
       return ListView(
         children: [
           for(int i = 0; i< context.watch<NoteDatabase>().currentNotes.length; i++)
-            ListTile(
-              title: Text(currentNotes[i].titolo),
-              subtitle: Text(currentNotes[i].descrizione),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  //editButton
-                  IconButton(onPressed: () => updateNote(currentNotes[i]), icon: const Icon(Icons.edit)),
-                  //delete button
-                  IconButton(onPressed: () => deleteNote(currentNotes[i].id), icon: const Icon(Icons.delete)),
-                  //esegui
-                  IconButton(onPressed: () => eseguiNote(currentNotes[i]), icon: const Icon(Icons.play_arrow)),
-                ],
+            Card(
+              child: ListTile(
+                title: Text(currentNotes[i].titolo),
+                subtitle: Text(currentNotes[i].descrizione),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    //editButton
+                    IconButton(onPressed: () => updateNote(currentNotes[i]), icon: const Icon(Icons.edit)),
+                    //delete button
+                    IconButton(onPressed: () => deleteNote(currentNotes[i].id), icon: const Icon(Icons.clear)),
+                    //esegui
+                    IconButton(onPressed: () => eseguiNote(currentNotes[i]), icon: const Icon(Icons.check)),
+                  ],
+                ),
               ),
             )
         ],);
