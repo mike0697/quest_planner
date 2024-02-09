@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/models/note_database.dart';
-import 'package:quest_planner/providers/ListQuestProvider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen ({super.key});
@@ -17,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
   void createNote(){
-      context.read<NoteDatabase>().addNote(titolo);
+      context.read<NoteDatabase>().addNote(titolo: titolo, desc: descrizione, punti: 1 );
   }
 
 
@@ -45,13 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 20),
                 child: TextButton(
-                onPressed: () {
-                  context.read<ListQuestProvider>().addQuest(titolo,descrizione);
-                  print( '$titolo , $descrizione');
-                },
-                  child: const Text('Salva', style: TextStyle(fontSize: 22,),)),
+                    onPressed: createNote,
+                    child: Text('Salva', style: TextStyle(fontSize: 22),)
+                ),
               ),
-              ElevatedButton(onPressed: createNote, child: Text('Create Note isar')),
             ],
           ),
         ),);

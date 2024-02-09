@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/Cloud.dart';
 import 'package:quest_planner/models/note_database.dart';
-import 'package:quest_planner/providers/ListQuestProvider.dart';
 import 'package:quest_planner/providers/UserProvider.dart';
 import 'package:quest_planner/screens/AuthPage.dart';
 import 'package:quest_planner/screens/HomeScreen.dart';
@@ -24,7 +23,6 @@ void main() async{
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => UserProvider()),
-    ChangeNotifierProvider(create: (context) => ListQuestProvider()),
     ChangeNotifierProvider(create: (context) => NoteDatabase()),
   ], child: const MyApp(),
   ));

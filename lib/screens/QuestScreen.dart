@@ -18,9 +18,9 @@ class _QuestScreenState extends State<QuestScreen> {
   }
   //update a note
   void updateNote(Note note){
-    note.text = 'text';
+    note.titolo = 'text';
     //show dialog
-    context.read<NoteDatabase>().updateNote(note.id, note.text);
+    context.read<NoteDatabase>().updateNote(note.id, note.titolo);
     //todo aggiungere dialog box
   }
   //delete a note
@@ -29,11 +29,10 @@ class _QuestScreenState extends State<QuestScreen> {
   }
 
   //esegui note
-  void eseguiNote(int id)
+  void eseguiNote(Note note)
   {
-    //todo aggiungere punti
-    context.read<UserProvider>().addPunti(1);
-    deleteNote(id);
+    context.read<UserProvider>().addPunti(note.ricompensa);
+    deleteNote(note.id);
   }
 
   @override
@@ -50,7 +49,8 @@ class _QuestScreenState extends State<QuestScreen> {
         children: [
           for(int i = 0; i< context.watch<NoteDatabase>().currentNotes.length; i++)
             ListTile(
-              title: Text(currentNotes[i].text),
+              title: Text(currentNotes[i].titolo),
+              subtitle: Text(currentNotes[i].descrizione),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -59,7 +59,7 @@ class _QuestScreenState extends State<QuestScreen> {
                   //delete button
                   IconButton(onPressed: () => deleteNote(currentNotes[i].id), icon: const Icon(Icons.delete)),
                   //esegui
-                  IconButton(onPressed: () => eseguiNote(currentNotes[i].id), icon: const Icon(Icons.play_arrow)),
+                  IconButton(onPressed: () => eseguiNote(currentNotes[i]), icon: const Icon(Icons.play_arrow)),
                 ],
               ),
             )

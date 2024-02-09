@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:quest_planner/providers/ListQuestProvider.dart';
-import 'package:quest_planner/providers/UserProvider.dart';
 
-import '../models/Quest.dart';
+
 
 
 class CardQuest extends StatelessWidget {
-  const CardQuest ({super.key, required this.quest});
-  final Quest quest;
+  const CardQuest ({super.key,});
+
   @override
   Widget build(BuildContext context) {
     // Accesso alla stringa
@@ -23,7 +20,7 @@ class CardQuest extends StatelessWidget {
                   // Titolo
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text(quest.titolo,
+                    child: Text('quest.titolo',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0,
@@ -35,7 +32,7 @@ class CardQuest extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
-                      quest.descrizione,
+                      'quest.descrizione',
                       style: const TextStyle(fontSize: 16.0),
                     ),
                   ),
@@ -55,8 +52,6 @@ class CardQuest extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          context.read<UserProvider>().addPunti(quest.ricompensa);
-                          context.read<ListQuestProvider>().removeQuestId(quest.id);
                           // Logica del secondo pulsante
                         },
                         child: const Text('Esegui'),
