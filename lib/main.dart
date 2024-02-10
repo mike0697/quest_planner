@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/Cloud.dart';
 import 'package:quest_planner/providers/quest_database.dart';
@@ -35,10 +36,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Quest Planner',
       theme: ThemeData(
         // This is the theme of your application.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        textTheme: GoogleFonts.poppinsTextTheme(),
         useMaterial3: true,
       ),
       home: StreamBuilder(

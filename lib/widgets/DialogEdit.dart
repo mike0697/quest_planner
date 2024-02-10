@@ -25,7 +25,7 @@ class _MyWidgetState extends State<MyWidget> {
 
     // Usa widget.parametro all'interno del widget State
     return AlertDialog(
-      title: Text('Modifica quest'),
+      title: const Text('Modifica quest'),
       content:
       Column(
         mainAxisSize: MainAxisSize.min,
@@ -35,7 +35,7 @@ class _MyWidgetState extends State<MyWidget> {
               child: Text('Titolo: ${widget.quest.titolo}')),
           TextField(
             controller: controllerTitolo,
-            decoration: InputDecoration(hintText: "Titolo"),),
+            decoration: const InputDecoration(hintText: "Titolo"),),
 
           //descrizione
           Align(
@@ -43,7 +43,7 @@ class _MyWidgetState extends State<MyWidget> {
               child: Text('Descrizione: ${widget.quest.descrizione}')),
           TextField(
             controller: controllerDesc,
-            decoration: InputDecoration(hintText: "Descrizione"),),
+            decoration: const InputDecoration(hintText: "Descrizione"),),
           //punti
           Align(
               alignment: Alignment.topLeft,
@@ -60,15 +60,14 @@ class _MyWidgetState extends State<MyWidget> {
       ),
       actions: <Widget>[
         TextButton(
-          child: Text('Annulla'),
+          child: const Text('Annulla'),
           onPressed: () {
             Navigator.of(context).pop();},
         ),
         TextButton(
-          child: Text('Invia'),
+          child: const Text('Invia'),
           onPressed: () {
             updateNote(widget.quest, controllerTitolo.text, controllerDesc.text, _currentValueSlider.toInt());
-            print(controllerTitolo.text);
             Navigator.of(context).pop();},
         )
       ],

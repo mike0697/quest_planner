@@ -75,12 +75,14 @@ class _QuestScreenState extends State<QuestScreen> {
         return Colors.red;
       case 'green':
         return Colors.green;
-      case 'purpleA':
+      case 'dpurple':
         return Colors.deepPurpleAccent;
       case 'blue':
         return Colors.blue;
       case 'yellow':
         return Colors.yellow;
+      case 'orange':
+        return Colors.orange;
       case 'white':
         return Colors.white;
       case 'pink':
