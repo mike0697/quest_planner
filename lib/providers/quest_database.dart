@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:quest_planner/Auth.dart';
 import 'package:quest_planner/models/quest.dart';
 
 class QuestDatabase extends ChangeNotifier {
@@ -22,6 +23,7 @@ class QuestDatabase extends ChangeNotifier {
     newNote.titolo = titolo;
     newNote.descrizione = desc;
     newNote.ricompensa = punti;
+    newNote.email = Auth().getCurrentUserEmail()!;
 
     //save to db
     await isar.writeTxn(() => isar.quests.put(newNote));
@@ -29,7 +31,9 @@ class QuestDatabase extends ChangeNotifier {
 
   //R E A D - notes from db
   Future<void> fetchNotes() async{
-    List<Quest> fetchedNotes = await isar.quests.where().findAll();
+    List<Quest> fetchedNotes = await isar.quests.where()
+    .emailEqualTo(Auth().getCurrentUserEmail()!)
+        .findAll();
     currentNotes.clear();
     currentNotes.addAll(fetchedNotes);
     notifyListeners();

@@ -8,4 +8,6 @@ class Quest{
   late String titolo;
   late String descrizione;
   late int ricompensa;
+  @Index()
+  late String email;
 }
