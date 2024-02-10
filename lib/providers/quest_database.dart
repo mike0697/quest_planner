@@ -24,6 +24,7 @@ class QuestDatabase extends ChangeNotifier {
     newNote.descrizione = desc;
     newNote.ricompensa = punti;
     newNote.email = Auth().getCurrentUserEmail()!;
+    newNote.color = 'white';
 
     //save to db
     await isar.writeTxn(() => isar.quests.put(newNote));

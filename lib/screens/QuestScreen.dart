@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quest_planner/widgets/DialogEdit.dart';
 import '../models/quest.dart';
 import '../providers/quest_database.dart';
 import '../providers/UserProvider.dart';
@@ -15,11 +16,6 @@ class _QuestScreenState extends State<QuestScreen> {
   //read notes
   void readNote() {
     context.read<QuestDatabase>().fetchNotes();
-  }
-  //update a note
-  void updateNote(Quest note, String ntitolo, String desc, int p){
-    context.read<QuestDatabase>().updateNote(note.id, ntitolo, desc, p);
-    //todo aggiungere slider punti
   }
   //delete a note
   void deleteNote(int id){
@@ -62,54 +58,7 @@ class _QuestScreenState extends State<QuestScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController controllerTitolo = TextEditingController();
-        TextEditingController controllerDesc = TextEditingController();
-        return AlertDialog(
-          title: Text('Modifica quest'),
-          content:
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Align(
-                  alignment: Alignment.topLeft,
-                  child: Text('Titolo: ${quest.titolo}')),
-              TextField(
-                controller: controllerTitolo,
-                decoration: InputDecoration(hintText: "Titolo"),),
-
-              //descrizione
-              Align(
-                  alignment: Alignment.topLeft,
-                  child: Text('Descrizione: ${quest.descrizione}')),
-              TextField(
-                controller: controllerDesc,
-                decoration: InputDecoration(hintText: "Descrizione"),),
-              //punti
-              Align(
-                  alignment: Alignment.topLeft,
-                  child: Text('Riconpensa: ${quest.ricompensa}')),
-              Slider(
-                min: 0,
-                max: 100,
-                divisions: 100,
-                value: 2,
-                onChanged: (double value) { print('a');},),
-            ],
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Annulla'),
-              onPressed: () {
-                Navigator.of(context).pop();},
-            ),
-            TextButton(
-              child: Text('Invia'),
-              onPressed: () {
-                updateNote(quest, controllerTitolo.text, controllerDesc.text, 1);
-              Navigator.of(context).pop();},
-            )
-          ],
-        );
+        return MyWidget(quest: quest);
       },
     );
   }
@@ -118,7 +67,27 @@ class _QuestScreenState extends State<QuestScreen> {
   void initState(){
     super.initState();
     readNote();
+  }
 
+  Color getCardColor(String scolor) {
+    switch (scolor) {
+      case 'red':
+        return Colors.red;
+      case 'green':
+        return Colors.green;
+      case 'purpleA':
+        return Colors.deepPurpleAccent;
+      case 'blue':
+        return Colors.blue;
+      case 'yellow':
+        return Colors.yellow;
+      case 'white':
+        return Colors.white;
+      case 'pink':
+        return Colors.pink;
+      default:
+        return Colors.deepPurple;
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -128,6 +97,7 @@ class _QuestScreenState extends State<QuestScreen> {
         children: [
           for(int i = 0; i< context.watch<QuestDatabase>().currentNotes.length; i++)
             Card(
+              surfaceTintColor: getCardColor(currentNotes[i].color),
               child: ListTile(
                 title: Text(currentNotes[i].titolo),
                 subtitle: Text(currentNotes[i].descrizione),

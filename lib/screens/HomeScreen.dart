@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     "descrizione": ""
   };
 
-  double _currentValueSlider = 0;
+  double _currentValueSlider = 1.0;
 
 
 

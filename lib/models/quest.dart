@@ -10,4 +10,5 @@ class Quest{
   late int ricompensa;
   @Index()
   late String email;
+  late String color;
 }
