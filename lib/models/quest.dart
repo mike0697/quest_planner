@@ -11,4 +11,5 @@ class Quest{
   @Index()
   late String email;
   late String color;
+  late String importanza;
 }

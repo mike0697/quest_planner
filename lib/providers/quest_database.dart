@@ -18,13 +18,14 @@ class QuestDatabase extends ChangeNotifier {
   final List<Quest> currentNotes = [];
 
   //create a note and save
-  Future<void> addNote({required String titolo, required String desc, required int punti, required String color}) async{
+  Future<void> addNote({required String titolo, required String desc, required int punti, required String color, required String importanza}) async{
     final newNote = Quest();
     newNote.titolo = titolo;
     newNote.descrizione = desc;
     newNote.ricompensa = punti;
     newNote.email = Auth().getCurrentUserEmail()!;
     newNote.color = color;
+    newNote.importanza = importanza;
 
     //save to db
     await isar.writeTxn(() => isar.quests.put(newNote));

@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   };
 
   double _currentValueSlider = 1.0;
-
+  String _valoreSelezionato ="Zero";
 
 
 
@@ -79,6 +79,40 @@ class _HomeScreenState extends State<HomeScreen> {
                       label: _currentValueSlider.round().toString(),
                     ),
                   ),
+
+                  //seleziona importanza
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: DropdownButton<String>(
+                        value: _valoreSelezionato,
+                        icon: const Icon(Icons.arrow_downward),
+                        iconSize: 24,
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.black, fontSize: 20),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.deepPurpleAccent,
+                        ),
+                        onChanged: (newValue) {
+                          setState(() {
+                            _valoreSelezionato = newValue!;
+                          });
+                        },
+                        items: <String>['Zero', 'Secondario', 'Prioritario', 'Urgente']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+
+
+
               
                   Padding(padding: const EdgeInsets.only(top: 25),
                       child: Container(
@@ -117,8 +151,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             String titolo = data["titolo"];
                             String desc = data["descrizione"];
                             String color = data["color"];
+                            String importanza = _valoreSelezionato;
                             //crea una nota
-                            context.read<QuestDatabase>().addNote(titolo: titolo, desc: desc, punti: _currentValueSlider.toInt() , color: color);
+                            context.read<QuestDatabase>().addNote(titolo: titolo, desc: desc, punti: _currentValueSlider.toInt() , color: color, importanza: importanza);
                             // Pulisci i controller e resetta il form
                             _titoloController.clear();
                             _descrizioneController.clear();
@@ -128,6 +163,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: const Text('Salva', style: TextStyle(fontSize: 22)),
                     ),
                   ),
+
+
               
               
                 ],
