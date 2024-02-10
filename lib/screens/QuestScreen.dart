@@ -17,11 +17,9 @@ class _QuestScreenState extends State<QuestScreen> {
     context.read<QuestDatabase>().fetchNotes();
   }
   //update a note
-  void updateNote(Quest note){
-    note.titolo = 'text';
-    //show dialog
-    context.read<QuestDatabase>().updateNote(note.id, note.titolo);
-    //todo aggiungere dialog box
+  void updateNote(Quest note, String ntitolo, String desc, int p){
+    context.read<QuestDatabase>().updateNote(note.id, ntitolo, desc, p);
+    //todo aggiungere slider punti
   }
   //delete a note
   void deleteNote(int id){
@@ -60,6 +58,62 @@ class _QuestScreenState extends State<QuestScreen> {
         });
   }
 
+  void _showDialogEdit(BuildContext context, Quest quest) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController controllerTitolo = TextEditingController();
+        TextEditingController controllerDesc = TextEditingController();
+        return AlertDialog(
+          title: Text('Modifica quest'),
+          content:
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Align(
+                  alignment: Alignment.topLeft,
+                  child: Text('Titolo: ${quest.titolo}')),
+              TextField(
+                controller: controllerTitolo,
+                decoration: InputDecoration(hintText: "Titolo"),),
+
+              //descrizione
+              Align(
+                  alignment: Alignment.topLeft,
+                  child: Text('Descrizione: ${quest.descrizione}')),
+              TextField(
+                controller: controllerDesc,
+                decoration: InputDecoration(hintText: "Descrizione"),),
+              //punti
+              Align(
+                  alignment: Alignment.topLeft,
+                  child: Text('Riconpensa: ${quest.ricompensa}')),
+              Slider(
+                min: 0,
+                max: 100,
+                divisions: 100,
+                value: 2,
+                onChanged: (double value) { print('a');},),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Annulla'),
+              onPressed: () {
+                Navigator.of(context).pop();},
+            ),
+            TextButton(
+              child: Text('Invia'),
+              onPressed: () {
+                updateNote(quest, controllerTitolo.text, controllerDesc.text, 1);
+              Navigator.of(context).pop();},
+            )
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState(){
     super.initState();
@@ -81,7 +135,7 @@ class _QuestScreenState extends State<QuestScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     //editButton
-                    //IconButton(onPressed: () => _showDialog(context), icon: const Icon(Icons.edit)),
+                    IconButton(onPressed: () => _showDialogEdit(context,currentNotes[i]), icon: const Icon(Icons.edit)),
                     //delete button
                     IconButton(onPressed: () => _showDialogDelete(context,currentNotes[i]), icon: const Icon(Icons.clear)),
                     //esegui
@@ -93,22 +147,3 @@ class _QuestScreenState extends State<QuestScreen> {
         ],);
         }
 }
-
-
-
-
-
-
-
-      /*ListView.builder(
-        itemCount: currentNotes.length,
-        itemBuilder: (context, index){
-      final note = currentNotes[index];
-      print(note.text);
-      return ListTile(
-        title: Text(note.text),
-      );
-    }),
-
-       */
-

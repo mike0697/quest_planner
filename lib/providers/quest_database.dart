@@ -40,10 +40,12 @@ class QuestDatabase extends ChangeNotifier {
   }
 
   //U P D A T E - a note in db
-  Future<void> updateNote(int id, String newText) async{
+  Future<void> updateNote(int id, String newText, String desc, int p) async{
     final existingNote = await isar.quests.get(id);
     if( existingNote != null){
       existingNote.titolo = newText;
+      existingNote.descrizione = desc;
+      existingNote.ricompensa = p;
       await isar.writeTxn(() => isar.quests.put(existingNote));
       await fetchNotes();
     }
