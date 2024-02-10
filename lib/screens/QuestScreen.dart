@@ -34,6 +34,31 @@ class _QuestScreenState extends State<QuestScreen> {
     context.read<UserProvider>().addPunti(note.ricompensa);
     deleteNote(note.id);
   }
+  void _showDialogDelete(BuildContext context, Quest quest) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Conferma'),
+            content: Text('Eliminare la quest: ${quest.titolo} ?'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Annulla'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text('Conferma'),
+                onPressed: () {
+                  deleteNote(quest.id);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  }
 
   @override
   void initState(){
@@ -56,9 +81,9 @@ class _QuestScreenState extends State<QuestScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     //editButton
-                    IconButton(onPressed: () => updateNote(currentNotes[i]), icon: const Icon(Icons.edit)),
+                    //IconButton(onPressed: () => _showDialog(context), icon: const Icon(Icons.edit)),
                     //delete button
-                    IconButton(onPressed: () => deleteNote(currentNotes[i].id), icon: const Icon(Icons.clear)),
+                    IconButton(onPressed: () => _showDialogDelete(context,currentNotes[i]), icon: const Icon(Icons.clear)),
                     //esegui
                     IconButton(onPressed: () => eseguiNote(currentNotes[i]), icon: const Icon(Icons.check)),
                   ],

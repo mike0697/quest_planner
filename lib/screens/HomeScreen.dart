@@ -19,11 +19,14 @@ class _HomeScreenState extends State<HomeScreen> {
     "descrizione": ""
   };
 
+  double _currentValueSlider = 0;
+
+
+
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Padding(
+    return Padding(
           padding: const EdgeInsets.all(25),
           child: Form(
             key: _formkey,
@@ -56,6 +59,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: const InputDecoration(
                       label: Text('Descrizione')),
                 ),
+                Padding(padding: const EdgeInsets.only(top: 25),
+                  child: Container(
+                    alignment: Alignment.topLeft,
+                    child: const Text('Riconpensa', style: TextStyle(fontSize: 18),),
+                  )
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Slider(value: _currentValueSlider,
+                    onChanged: (double value) {setState(() {
+                      _currentValueSlider = value;  });
+                    },
+                    min: 0,
+                    max: 100,
+                    divisions: 100,
+                    label: _currentValueSlider.round().toString(),
+                  ),
+                ),
+
+
+
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: TextButton(
@@ -65,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           String titolo = data["titolo"];
                           String desc = data["descrizione"];
                           //crea una nota
-                          context.read<QuestDatabase>().addNote(titolo: titolo, desc: desc, punti: 1 );
+                          context.read<QuestDatabase>().addNote(titolo: titolo, desc: desc, punti: _currentValueSlider.toInt() );
                           // Pulisci i controller e resetta il form
                           _titoloController.clear();
                           _descrizioneController.clear();
@@ -75,9 +99,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const Text('Salva', style: TextStyle(fontSize: 22)),
                   ),
                 ),
+
+
               ],
             ),
           ),
-        ),);
+        );
   }
 }
