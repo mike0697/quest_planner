@@ -39,7 +39,21 @@ class QuestDatabase extends ChangeNotifier {
         .findAll();
     currentNotes.clear();
     currentNotes.addAll(fetchedNotes);
+    ordinaLista(currentNotes);
     notifyListeners();
+  }
+
+  void ordinaLista(List<Quest> lista) {
+    final ordineImportanza = ['Urgente', 'Prioritario', 'Secondario', 'Inbox'];
+
+    lista.sort((a, b) {
+      int confrontoImportanza = ordineImportanza.indexOf(a.importanza).compareTo(ordineImportanza.indexOf(b.importanza));
+      if (confrontoImportanza != 0) {
+        return confrontoImportanza;
+      } else {
+        return a.id.compareTo(b.id);
+      }
+    });
   }
 
   //U P D A T E - a note in db
