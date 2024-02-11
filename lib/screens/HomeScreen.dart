@@ -21,7 +21,11 @@ class _HomeScreenState extends State<HomeScreen> {
   };
 
   double _currentValueSlider = 1.0;
-  String _valoreSelezionato ="Zero";
+  String _valoreSelezionato ="Inbox";
+
+  List<String> priority =['Urgente', 'Prioritario', 'Secondario','Inbox'];
+  Color b = Colors.deepPurpleAccent;
+  Color sec = Colors.white;
 
 
 
@@ -100,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             _valoreSelezionato = newValue!;
                           });
                         },
-                        items: <String>['Zero', 'Secondario', 'Prioritario', 'Urgente']
+                        items: <String>['Inbox', 'Secondario', 'Prioritario', 'Urgente']
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -121,8 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                   ),
               
-                  Row(
-                      mainAxisSize: MainAxisSize.min,
+                  Wrap(
                       children: [
                         IconButton(onPressed: (){data['color'] = 'white';}, icon: Icon(Icons.brightness_1_outlined, color: Colors.black,)),
                         IconButton(onPressed: (){data['color'] = 'blue';}, icon: Icon(Icons.brightness_1, color: Colors.blue,)),
@@ -139,7 +142,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       IconButton(onPressed: (){data['color'] = 'orange';}, icon: Icon(Icons.brightness_1, color: Colors.orange,)),
                     ],
                   ),
-              
               
               
                   Padding(
@@ -163,10 +165,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: const Text('Salva', style: TextStyle(fontSize: 22)),
                     ),
                   ),
-
-
-              
-              
                 ],
               ),
             ),
