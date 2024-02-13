@@ -30,6 +30,7 @@ class QuestDatabase extends ChangeNotifier {
 
     //save to db
     await isar.writeTxn(() => isar.quests.put(newNote));
+    fetchNotes();
   }
 
   //R E A D - notes from db

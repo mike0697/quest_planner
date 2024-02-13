@@ -96,35 +96,37 @@ class _QuestScreenState extends State<QuestScreen> {
     final noteDatabase = context.watch<QuestDatabase>();
     List<Quest> currentNotes = noteDatabase.currentNotes;
       return ListView(
-        children: [
-          for(int i = 0; i< context.watch<QuestDatabase>().currentNotes.length; i++)
-            Card(
-              surfaceTintColor: getCardColor(currentNotes[i].color),
-              child: Column(
-                children:[ ListTile(
-                  title: Text(currentNotes[i].titolo),
-                  subtitle: Text(currentNotes[i].descrizione),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      //editButton
-                      IconButton(onPressed: () => _showDialogEdit(context,currentNotes[i]), icon: const Icon(Icons.edit)),
-                      //delete button
-                      IconButton(onPressed: () => _showDialogDelete(context,currentNotes[i]), icon: const Icon(Icons.clear)),
-                      //esegui
-                      IconButton(onPressed: () => eseguiNote(currentNotes[i]), icon: const Icon(Icons.check)),
-                    ],
+          padding: EdgeInsets.only(bottom: 56.0),
+          children: [
+            for(int i = 0; i< context.watch<QuestDatabase>().currentNotes.length; i++)
+              Card(
+                surfaceTintColor: getCardColor(currentNotes[i].color),
+                child: Column(
+                  children:[ ListTile(
+                    title: Text(currentNotes[i].titolo),
+                    subtitle: Text(currentNotes[i].descrizione),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        //editButton
+                        IconButton(onPressed: () => _showDialogEdit(context,currentNotes[i]), icon: const Icon(Icons.edit)),
+                        //delete button
+                        IconButton(onPressed: () => _showDialogDelete(context,currentNotes[i]), icon: const Icon(Icons.clear)),
+                        //esegui
+                        IconButton(onPressed: () => eseguiNote(currentNotes[i]), icon: const Icon(Icons.check)),
+                      ],
+                    ),
                   ),
-                ),
 
-                  Container(
-                    padding: EdgeInsets.only(left: 20),
-                    alignment: Alignment.topLeft,
-                      child: Text(currentNotes[i].importanza)),
-                  const Padding(padding: EdgeInsets.only(bottom: 10)),
-              ],
-              ),
-            )
-        ],);
+                    Container(
+                      padding: EdgeInsets.only(left: 20),
+                      alignment: Alignment.topLeft,
+                        child: Text(currentNotes[i].importanza)),
+                    const Padding(padding: EdgeInsets.only(bottom: 10)),
+                ],
+                ),
+              )
+          ],
+      );
         }
 }

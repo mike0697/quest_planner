@@ -6,10 +6,10 @@ import 'package:quest_planner/Cloud.dart';
 import 'package:quest_planner/providers/quest_database.dart';
 import 'package:quest_planner/providers/UserProvider.dart';
 import 'package:quest_planner/screens/AuthPage.dart';
-import 'package:quest_planner/screens/HomeScreen.dart';
 import 'package:quest_planner/screens/ProfileScreen.dart';
 import 'package:quest_planner/screens/QuestScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:quest_planner/widgets/addQuest.dart';
 import 'Auth.dart';
 import 'firebase_options.dart';
 
@@ -142,7 +142,6 @@ class _Widget028State extends State<Widget028> {
   @override
   Widget build(BuildContext context) {
     List<Widget> body = [
-      HomeScreen(),
       QuestScreen(),
       ProfileScreen(),
     ];
@@ -158,10 +157,6 @@ class _Widget028State extends State<Widget028> {
         },
         items: const [
           BottomNavigationBarItem(
-            label: 'Home',
-            icon: Icon(Icons.home),
-          ),
-          BottomNavigationBarItem(
             label: 'Quest',
             icon: Icon(Icons.menu),
           ),
@@ -171,6 +166,16 @@ class _Widget028State extends State<Widget028> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () => _showDialogAdd(context), child: Icon(Icons.add),),
+    );
+  }
+
+  void _showDialogAdd(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return addQuest();
+      },
     );
   }
 }

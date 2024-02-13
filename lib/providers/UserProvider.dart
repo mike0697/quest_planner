@@ -34,7 +34,12 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void saliDiLivello(){}
+  void saliDiLivello(){
+    if(_punti >= 100){
+      _livello = _livello + 1;
+      _punti = _punti - 100;
+    }
+  }
 
   void resetPuntiLivello(){
     _punti = 1;
