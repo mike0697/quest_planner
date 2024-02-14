@@ -9,7 +9,6 @@ import 'package:quest_planner/screens/AuthPage.dart';
 import 'package:quest_planner/screens/ProfileScreen.dart';
 import 'package:quest_planner/screens/QuestScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:quest_planner/widgets/addQuest.dart';
 import 'Auth.dart';
 import 'firebase_options.dart';
 
@@ -39,7 +38,7 @@ class MyApp extends StatelessWidget {
       title: 'Quest Planner',
       theme: ThemeData(
         // This is the theme of your application.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
         textTheme: GoogleFonts.poppinsTextTheme(),
         useMaterial3: true,
       ),
@@ -49,7 +48,7 @@ class MyApp extends StatelessWidget {
           if(snapshot.hasData){
             return const MyHomePage(title: 'Quest Planner');
           } else{
-            return AuthPage();
+            return const AuthPage();
           }
         },
 
@@ -118,8 +117,8 @@ class _Widget028State extends State<Widget028> {
   @override
   Widget build(BuildContext context) {
     List<Widget> body = [
-      QuestScreen(),
-      ProfileScreen(),
+      const QuestScreen(),
+      const ProfileScreen(),
     ];
 
     return Scaffold(
@@ -142,16 +141,7 @@ class _Widget028State extends State<Widget028> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () => _showDialogAdd(context), child: Icon(Icons.add),),
-    );
-  }
 
-  void _showDialogAdd(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return addQuest();
-      },
     );
   }
 }

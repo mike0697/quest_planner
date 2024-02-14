@@ -118,7 +118,7 @@ class _ListQuestState extends State<ListQuest> {
                 ),
 
                   Container(
-                      padding: EdgeInsets.only(left: 20),
+                      padding: const EdgeInsets.only(left: 16),
                       alignment: Alignment.topLeft,
                       child: Text(currentNotes[i].importanza)),
                   const Padding(padding: EdgeInsets.only(bottom: 10)),
