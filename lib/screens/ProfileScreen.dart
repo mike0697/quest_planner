@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/providers/UserProvider.dart';
+import '../Auth.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen ({super.key});
 
+  Future<void> signOut() async{
+    await Auth().signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +23,9 @@ class ProfileScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 25),
                 child: ElevatedButton(onPressed: ()=> context.read<UserProvider>().resetPuntiLivello() , child: const Text('Reset'))),
+            Padding(
+                padding: const EdgeInsets.only(top: 25),
+                child: ElevatedButton(onPressed: ()=> signOut() , child: const Text('LogOut'))),
           ],
         ),
       ),
