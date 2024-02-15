@@ -17,6 +17,12 @@ class QuestDatabase extends ChangeNotifier {
   //list of notes
   final List<Quest> currentNotes = [];
 
+  final List<Quest> questUrgenti = [];
+  final List<Quest> questPrioritarie = [];
+  final List<Quest> questSecondarie = [];
+  final List<Quest> questInbox = [];
+  final List<Quest> questEseguite = [];
+
   //create a note and save
   Future<void> addNote({required String titolo, required String desc, required int punti, required String color,
     required String importanza, }) async{
@@ -31,6 +37,7 @@ class QuestDatabase extends ChangeNotifier {
     //save to db
     await isar.writeTxn(() => isar.quests.put(newNote));
     fetchNotes();
+    fetchUrgenti();
   }
 
   //R E A D - notes from db
@@ -41,6 +48,17 @@ class QuestDatabase extends ChangeNotifier {
     currentNotes.clear();
     currentNotes.addAll(fetchedNotes);
     ordinaLista(currentNotes);
+    notifyListeners();
+  }
+  //fetch only importanza
+  Future<void> fetchUrgenti() async{
+    List<Quest> fetchedNotes = await isar.quests.where()
+    .emailEqualTo(Auth().getCurrentUserEmail()!)
+    .filter()
+    .importanzaEqualTo('Urgente')
+        .findAll();
+    questUrgenti.clear();
+    questUrgenti.addAll(fetchedNotes);
     notifyListeners();
   }
 
@@ -68,6 +86,7 @@ class QuestDatabase extends ChangeNotifier {
       existingNote.color = color;
       await isar.writeTxn(() => isar.quests.put(existingNote));
       await fetchNotes();
+      await fetchUrgenti();
     }
   }
 
@@ -75,6 +94,7 @@ class QuestDatabase extends ChangeNotifier {
   Future<void> deleteNote(int id) async{
     await isar.writeTxn(() => isar.quests.delete(id));
     await fetchNotes();
+    await fetchUrgenti();
   }
 
 }

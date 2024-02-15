@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../providers/quest_database.dart';
+import '../../providers/quest_database.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/widgets/DialogEdit.dart';
-import '../models/quest.dart';
-import '../providers/UserProvider.dart';
+import '../../models/quest.dart';
+import '../../providers/UserProvider.dart';
 
 class ListQuest extends StatefulWidget {
-  const ListQuest({super.key});
+  const ListQuest({super.key, required this.priority});
+  final String priority;
 
   @override
   State<ListQuest> createState() => _ListQuestState();
@@ -34,17 +35,17 @@ class _ListQuestState extends State<ListQuest> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Conferma'),
+            title: const Text('Conferma'),
             content: Text('Eliminare la quest: ${quest.titolo} ?'),
             actions: <Widget>[
               TextButton(
-                child: Text('Annulla'),
+                child: const Text('Annulla'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               TextButton(
-                child: Text('Conferma'),
+                child: const Text('Conferma'),
                 onPressed: () {
                   deleteNote(quest.id);
                   Navigator.of(context).pop();
@@ -95,7 +96,7 @@ class _ListQuestState extends State<ListQuest> {
       final noteDatabase = context.watch<QuestDatabase>();
       List<Quest> currentNotes = noteDatabase.currentNotes;
       return ListView(
-        padding: EdgeInsets.only(bottom: 56.0),
+        padding: const EdgeInsets.only(bottom: 56.0),
         children: [
           for(int i = 0; i< context.watch<QuestDatabase>().currentNotes.length; i++)
             Card(
