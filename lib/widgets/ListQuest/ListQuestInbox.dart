@@ -4,17 +4,17 @@ import '../../providers/quest_database.dart';
 import 'package:provider/provider.dart';
 import '../../models/quest.dart';
 
-class ListQuestUrgent extends StatefulWidget {
-  const ListQuestUrgent({super.key});
+class ListQuestInbox extends StatefulWidget {
+  const ListQuestInbox({super.key});
 
   @override
-  State<ListQuestUrgent> createState() => _ListQuestState();
+  State<ListQuestInbox> createState() => _ListQuestState();
 }
 
-class _ListQuestState extends State<ListQuestUrgent> {
+class _ListQuestState extends State<ListQuestInbox> {
   //read notes
   void readNote() {
-    context.read<QuestDatabase>().fetchUrgenti();
+    context.read<QuestDatabase>().fetchInbox();
   }
   @override
   void initState(){
@@ -24,11 +24,11 @@ class _ListQuestState extends State<ListQuestUrgent> {
     @override
     Widget build(BuildContext context) {
       final noteDatabase = context.watch<QuestDatabase>();
-      List<Quest> currentNotes = noteDatabase.questUrgenti;
+      List<Quest> currentNotes = noteDatabase.questInbox;
       return ListView(
         padding: const EdgeInsets.only(bottom: 56.0),
         children: [
-          for(int i = 0; i< context.watch<QuestDatabase>().questUrgenti.length; i++)
+          for(int i = 0; i< context.watch<QuestDatabase>().questInbox.length; i++)
             CardQuest(quest: currentNotes[i])
         ],
       );

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quest_planner/widgets/CircleTapBar.dart';
 import 'package:quest_planner/widgets/ListQuest/ListQuest.dart';
+import 'package:quest_planner/widgets/ListQuest/ListQuestInbox.dart';
+import 'package:quest_planner/widgets/ListQuest/ListQuestPriority.dart';
+import 'package:quest_planner/widgets/ListQuest/ListQuestSecondary.dart';
 import 'package:quest_planner/widgets/ListQuest/ListQuestUrgenti.dart';
 import 'package:quest_planner/widgets/app_large_text.dart';
 import '../widgets/addQuest.dart';
@@ -59,10 +62,10 @@ class _QuestScreenState extends State<QuestScreen> with TickerProviderStateMixin
                   controller: _tabController,
                   children: const[
                     ListQuest(priority: 'all',),
-                    ListQuestUrgent(priority: 'Urgente',),
-                    ListQuest(priority: 'Prioritario',),
-                    ListQuest(priority: 'Secondario',),
-                    ListQuest(priority: 'inbox'),
+                    ListQuestUrgent(),
+                    ListQuestPriority(),
+                    ListQuestSecondary(),
+                    ListQuestInbox(),
                   ],
                 )
               )

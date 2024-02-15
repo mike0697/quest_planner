@@ -38,6 +38,9 @@ class QuestDatabase extends ChangeNotifier {
     await isar.writeTxn(() => isar.quests.put(newNote));
     fetchNotes();
     fetchUrgenti();
+    fetchPrioritario();
+    fetchSecondario();
+    fetchInbox();
   }
 
   //R E A D - notes from db
@@ -59,6 +62,39 @@ class QuestDatabase extends ChangeNotifier {
         .findAll();
     questUrgenti.clear();
     questUrgenti.addAll(fetchedNotes);
+    notifyListeners();
+  }
+
+  Future<void> fetchPrioritario() async{
+    List<Quest> fetchedNotes = await isar.quests.where()
+        .emailEqualTo(Auth().getCurrentUserEmail()!)
+        .filter()
+        .importanzaEqualTo('Prioritario')
+        .findAll();
+    questPrioritarie.clear();
+    questPrioritarie.addAll(fetchedNotes);
+    notifyListeners();
+  }
+
+  Future<void> fetchSecondario() async{
+    List<Quest> fetchedNotes = await isar.quests.where()
+        .emailEqualTo(Auth().getCurrentUserEmail()!)
+        .filter()
+        .importanzaEqualTo('Secondario')
+        .findAll();
+    questSecondarie.clear();
+    questSecondarie.addAll(fetchedNotes);
+    notifyListeners();
+  }
+
+  Future<void> fetchInbox() async{
+    List<Quest> fetchedNotes = await isar.quests.where()
+        .emailEqualTo(Auth().getCurrentUserEmail()!)
+        .filter()
+        .importanzaEqualTo('Inbox')
+        .findAll();
+    questInbox.clear();
+    questInbox.addAll(fetchedNotes);
     notifyListeners();
   }
 
@@ -87,6 +123,9 @@ class QuestDatabase extends ChangeNotifier {
       await isar.writeTxn(() => isar.quests.put(existingNote));
       await fetchNotes();
       await fetchUrgenti();
+      await fetchPrioritario();
+      await fetchSecondario();
+      await fetchInbox();
     }
   }
 
@@ -95,6 +134,9 @@ class QuestDatabase extends ChangeNotifier {
     await isar.writeTxn(() => isar.quests.delete(id));
     await fetchNotes();
     await fetchUrgenti();
+    await fetchPrioritario();
+    await fetchSecondario();
+    await fetchInbox();
   }
 
 }
