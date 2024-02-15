@@ -59,7 +59,7 @@ class _QuestScreenState extends State<QuestScreen> with TickerProviderStateMixin
                   controller: _tabController,
                   children: const[
                     ListQuest(priority: 'all',),
-                    ListQuestUrgenti(priority: 'Urgente',),
+                    ListQuestUrgent(priority: 'Urgente',),
                     ListQuest(priority: 'Prioritario',),
                     ListQuest(priority: 'Secondario',),
                     ListQuest(priority: 'inbox'),
