@@ -12,4 +12,5 @@ class Quest{
   late String email;
   late String color;
   late String importanza;
+  late String qcolor;
 }
