@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/Cloud.dart';
+import 'package:quest_planner/providers/providerColorCreaQuest.dart';
 import 'package:quest_planner/providers/quest_database.dart';
 import 'package:quest_planner/providers/UserProvider.dart';
 import 'package:quest_planner/screens/AuthPage.dart';
@@ -24,6 +25,7 @@ void main() async{
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => UserProvider()),
     ChangeNotifierProvider(create: (context) => QuestDatabase()),
+    ChangeNotifierProvider(create: (context) => ColorProviderCreaQuest()),
   ], child: const MyApp(),
   ));
 }

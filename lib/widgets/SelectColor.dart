@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/providerColorCreaQuest.dart';
 
 class SelectColor extends StatefulWidget {
   const SelectColor({super.key});
@@ -30,24 +33,25 @@ class _SelectColorState extends State<SelectColor> {
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsets.all(6),
-        child: Card(
-          elevation: 2,
-          child: ColorPicker(
-            enableShadesSelection: true,
+        child: ColorPicker(
+            enableShadesSelection: false,
             // Use the screenPickerColor as start color.
             color: screenPickerColor,
             // Update the screenPickerColor using the callback.
-            onColorChanged: (Color color) =>
-                setState(() => screenPickerColor = color),
-            width: 44,
-            height: 44,
+            onColorChanged: (Color color)  {Provider.of<ColorProviderCreaQuest>(context, listen: false).setColor(color);
+                  setState(() => screenPickerColor = color);
+                },
+            width: 22,
+            height: 22,
+            spacing: 28,
+            columnSpacing: 8,
             borderRadius: 22,
-            pickersEnabled: <ColorPickerType, bool>{
-              ColorPickerType.accent: true,
+            pickersEnabled: const <ColorPickerType, bool>{
+              ColorPickerType.accent: false,
               ColorPickerType.primary: true,
               ColorPickerType.bw: false,
               ColorPickerType.both: false,
-              ColorPickerType.wheel: true,
+              ColorPickerType.wheel: false,
             },
             heading: Text(
               'Seleziona colore',
@@ -56,7 +60,6 @@ class _SelectColorState extends State<SelectColor> {
             subheading: Text('Select color shade',style: Theme.of(context).textTheme.titleSmall,),
           ),
         ),
-      ),
     );
   }
 }

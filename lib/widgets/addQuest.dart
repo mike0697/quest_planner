@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quest_planner/widgets/SelectColor.dart';
 
+import '../providers/providerColorCreaQuest.dart';
 import '../providers/quest_database.dart';
 import 'package:provider/provider.dart';
 class addQuest extends StatefulWidget {
@@ -18,6 +20,12 @@ class _addQuestState extends State<addQuest> {
   String _valoreSelezionato= "Inbox";
 
   @override
+  void initState() {
+    Provider.of<ColorProviderCreaQuest>(context, listen: false).setColor(Colors.red);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Crea nuova quest'),
@@ -26,7 +34,7 @@ class _addQuestState extends State<addQuest> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Align(
+            const Align(
                 alignment: Alignment.topLeft,
                 child: Text('Titolo: ')),
             TextField(
@@ -34,14 +42,14 @@ class _addQuestState extends State<addQuest> {
               decoration: const InputDecoration(hintText: "Titolo"),),
 
             //descrizione
-            Align(
+            const Align(
                 alignment: Alignment.topLeft,
                 child: Text('Descrizione: ')),
             TextField(
               controller: controllerDesc,
               decoration: const InputDecoration(hintText: "Descrizione"),),
             //punti
-            Align(
+            const Align(
                 alignment: Alignment.topLeft,
                 child: Text('Riconpensa: ')),
             Slider(
@@ -106,6 +114,7 @@ class _addQuestState extends State<addQuest> {
                 IconButton(onPressed: (){colorQuest = 'orange';}, icon: Icon(Icons.brightness_1, color: Colors.orange,)),
               ],
             ),
+            SelectColor(),
           ],
         ),
       ),
@@ -118,7 +127,12 @@ class _addQuestState extends State<addQuest> {
         TextButton(
           child: const Text('Invia'),
           onPressed: () {
-            context.read<QuestDatabase>().addNote(titolo: controllerTitolo.text, desc: controllerDesc.text, punti: _currentValueSlider.toInt() , color: colorQuest, importanza: _valoreSelezionato);
+            context.read<QuestDatabase>().addNote(
+                titolo: controllerTitolo.text, desc: controllerDesc.text,
+                punti: _currentValueSlider.toInt(),
+                color: colorQuest,
+                colorq: (Provider.of<ColorProviderCreaQuest>(context, listen: false).myString),
+                importanza: _valoreSelezionato);
             Navigator.of(context).pop();},
         )
       ],

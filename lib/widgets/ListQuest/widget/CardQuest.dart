@@ -37,7 +37,8 @@ class _CardQuestState extends State<CardQuest> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      surfaceTintColor: getCardColor(widget.quest.color),
+      surfaceTintColor: Color(int.parse(widget.quest.qcolor, radix: 16)),
+      //surfaceTintColor: getCardColor(widget.quest.color),
       child: Column(
         children: [ ListTile(
           title: Text(widget.quest.titolo),

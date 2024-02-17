@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/providers/quest_database.dart';
 
+import '../providers/providerColorCreaQuest.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen ({super.key});
 
@@ -155,7 +157,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             String color = data["color"];
                             String importanza = _valoreSelezionato;
                             //crea una nota
-                            context.read<QuestDatabase>().addNote(titolo: titolo, desc: desc, punti: _currentValueSlider.toInt() , color: color, importanza: importanza);
+                            context.read<QuestDatabase>().addNote(titolo: titolo, desc: desc, punti: _currentValueSlider.toInt() ,
+                                color: color, colorq: (Provider.of<ColorProviderCreaQuest>(context).myString),
+                                importanza: importanza);
                             // Pulisci i controller e resetta il form
                             _titoloController.clear();
                             _descrizioneController.clear();
