@@ -6,7 +6,7 @@ import 'package:quest_planner/Auth.dart';
 import 'package:quest_planner/models/quest.dart';
 
 class QuestDatabase extends ChangeNotifier {
-  //INITIALIZe DATABASE
+  //INITIALIZE DATABASE
   static late Isar isar;
   static Future<void> initialize() async {
     final dir = await getApplicationDocumentsDirectory();
@@ -17,7 +17,6 @@ class QuestDatabase extends ChangeNotifier {
   }
   //list of notes
   final List<Quest> currentNotes = [];
-
   final List<Quest> questUrgenti = [];
   final List<Quest> questPrioritarie = [];
   final List<Quest> questSecondarie = [];
@@ -53,7 +52,7 @@ class QuestDatabase extends ChangeNotifier {
         .findAll();
     currentNotes.clear();
     currentNotes.addAll(fetchedNotes);
-    ordinaLista(currentNotes);
+    sortList(currentNotes);
     notifyListeners();
   }
   //fetch only importanza
@@ -101,13 +100,13 @@ class QuestDatabase extends ChangeNotifier {
     notifyListeners();
   }
 
-  void ordinaLista(List<Quest> lista) {
-    final ordineImportanza = ['Urgente', 'Prioritario', 'Secondario', 'Inbox'];
+  void sortList(List<Quest> lista) {
+    final orderImportance = ['Urgente', 'Prioritario', 'Secondario', 'Inbox'];
 
     lista.sort((a, b) {
-      int confrontoImportanza = ordineImportanza.indexOf(a.importanza).compareTo(ordineImportanza.indexOf(b.importanza));
-      if (confrontoImportanza != 0) {
-        return confrontoImportanza;
+      int comparisonImportance = orderImportance.indexOf(a.importanza).compareTo(orderImportance.indexOf(b.importanza));
+      if (comparisonImportance != 0) {
+        return comparisonImportance;
       } else {
         return a.id.compareTo(b.id);
       }
@@ -120,7 +119,7 @@ class QuestDatabase extends ChangeNotifier {
     required String colorq,
   }) async{
     final existingNote = await isar.quests.get(id);
-    if( existingNote != null){
+    if(existingNote != null){
       existingNote.titolo = title;
       existingNote.descrizione = description;
       existingNote.ricompensa = point;
