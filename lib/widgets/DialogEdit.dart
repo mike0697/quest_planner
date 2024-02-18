@@ -107,7 +107,7 @@ class _MyWidgetState extends State<MyWidget> {
                   child: const Text('Seleziona colore: ', style: TextStyle(fontSize: 18),),
                 )
             ),
-            SelectColor(),
+            SelectColor(quest: widget.quest),
           ],
         ),
       ),
@@ -130,6 +130,6 @@ class _MyWidgetState extends State<MyWidget> {
   void updateNote(Quest quest, String title, String description, int point){
     context.read<QuestDatabase>().updateNote(id: quest.id, title: title, description: description,
         point: point,importance: _valoreSelezionato,
-        colorq: (Provider.of<AddEditQuestProvider>(context, listen: false).myString));
+        colorq: (Provider.of<AddEditQuestProvider>(context, listen: false).myColor));
   }
 }

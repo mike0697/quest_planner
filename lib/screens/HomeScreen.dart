@@ -137,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             String importanza = _valoreSelezionato;
                             //crea una nota
                             context.read<QuestDatabase>().addNote(titolo: titolo, desc: desc, punti: _currentValueSlider.toInt() ,
-                                color: color, colorq: (Provider.of<AddEditQuestProvider>(context).myString),
+                                color: color, colorq: (Provider.of<AddEditQuestProvider>(context).myColor),
                                 importanza: importanza);
                             // Pulisci i controller e resetta il form
                             _titoloController.clear();

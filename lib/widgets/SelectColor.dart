@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:provider/provider.dart';
 
+import '../models/quest.dart';
 import '../providers/addEditQuestProvider.dart';
 
 class SelectColor extends StatefulWidget {
-  const SelectColor({super.key});
+  const SelectColor({super.key, required this.quest});
+
+  final Quest? quest;
 
   @override
   State<SelectColor> createState() => _SelectColorState();
@@ -22,9 +25,13 @@ class _SelectColorState extends State<SelectColor> {
   @override
   void initState() {
     super.initState();
-    screenPickerColor = Colors.blue;  // Material blue.
+    screenPickerColor = Colors.indigo;  // Material blue.
     dialogPickerColor = Colors.red;   // Material red.
     dialogSelectColor = const Color(0xFFA239CA); // A purple color.
+    //If the quest exists, initialize it with its color
+    if(widget.quest != null){
+      screenPickerColor = Color(int.parse(widget.quest!.qcolor, radix: 16));
+    }
   }
 
   @override

@@ -95,7 +95,7 @@ class _addQuestState extends State<addQuest> {
                   child: const Text('Seleziona colore: ', style: TextStyle(fontSize: 18),),
                 )
             ),
-            SelectColor(),
+            const SelectColor(quest: null),
           ],
         ),
       ),
@@ -112,7 +112,7 @@ class _addQuestState extends State<addQuest> {
                 titolo: controllerTitolo.text, desc: controllerDesc.text,
                 punti: _currentValueSlider.toInt(),
                 color: "",
-                colorq: (Provider.of<AddEditQuestProvider>(context, listen: false).myString),
+                colorq: (Provider.of<AddEditQuestProvider>(context, listen: false).myColor),
                 importanza: _valoreSelezionato);
             Navigator.of(context).pop();},
         )

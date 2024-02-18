@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AddEditQuestProvider extends ChangeNotifier {
-String _myString = '';
+String _myColor = '';
 
-String get myString => _myString;
+String get myColor => _myColor;
 
 void setColor(Color c2) {
   String colorAsString = c2.value.toRadixString(16);
-  _myString = colorAsString;
+  _myColor = colorAsString;
   notifyListeners();
 }
 }
