@@ -120,15 +120,15 @@ class _MyWidgetState extends State<MyWidget> {
         TextButton(
           child: const Text('Invia'),
           onPressed: () {
-            updateNote(widget.quest, controllerTitolo.text, controllerDesc.text, _currentValueSlider.toInt());
+            updateQuest(widget.quest, controllerTitolo.text, controllerDesc.text, _currentValueSlider.toInt());
             Navigator.of(context).pop();},
         )
       ],
     );
   }
 
-  void updateNote(Quest quest, String title, String description, int point){
-    context.read<QuestDatabase>().updateNote(id: quest.id, title: title, description: description,
+  void updateQuest(Quest quest, String title, String description, int point){
+    context.read<QuestDatabase>().updateQuest(id: quest.id, title: title, description: description,
         point: point,importance: _valoreSelezionato,
         color: (Provider.of<AddEditQuestProvider>(context, listen: false).myColor));
   }

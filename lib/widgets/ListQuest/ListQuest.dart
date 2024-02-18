@@ -16,7 +16,7 @@ class ListQuest extends StatefulWidget {
 class _ListQuestState extends State<ListQuest> {
   //read notes
   void readNote() {
-    context.read<QuestDatabase>().fetchNotes();
+    context.read<QuestDatabase>().fetchQuests();
   }
   @override
   void initState(){
@@ -26,11 +26,11 @@ class _ListQuestState extends State<ListQuest> {
     @override
     Widget build(BuildContext context) {
       final noteDatabase = context.watch<QuestDatabase>();
-      List<Quest> currentNotes = noteDatabase.currentNotes;
+      List<Quest> currentNotes = noteDatabase.currentQuests;
       return ListView(
         padding: const EdgeInsets.only(bottom: 56.0),
         children: [
-          for(int i = 0; i< context.watch<QuestDatabase>().currentNotes.length; i++)
+          for(int i = 0; i< context.watch<QuestDatabase>().currentQuests.length; i++)
             CardQuest(quest: currentNotes[i])
         ],
       );

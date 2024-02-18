@@ -24,11 +24,11 @@ class _ListQuestState extends State<ListQuestPriority> {
     @override
     Widget build(BuildContext context) {
       final noteDatabase = context.watch<QuestDatabase>();
-      List<Quest> currentNotes = noteDatabase.questPrioritarie;
+      List<Quest> currentNotes = noteDatabase.priorityQuests;
       return ListView(
         padding: const EdgeInsets.only(bottom: 56.0),
         children: [
-          for(int i = 0; i< context.watch<QuestDatabase>().questPrioritarie.length; i++)
+          for(int i = 0; i< context.watch<QuestDatabase>().priorityQuests.length; i++)
             CardQuest(quest: currentNotes[i])
         ],
       );

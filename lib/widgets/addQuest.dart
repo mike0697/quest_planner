@@ -108,7 +108,7 @@ class _addQuestState extends State<addQuest> {
         TextButton(
           child: const Text('Invia'),
           onPressed: () {
-            context.read<QuestDatabase>().addNote(
+            context.read<QuestDatabase>().addQuest(
                 title: controllerTitolo.text, description: controllerDesc.text,
                 points: _currentValueSlider.toInt(),
                 color: (Provider.of<AddEditQuestProvider>(context, listen: false).myColor),

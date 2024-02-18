@@ -16,15 +16,15 @@ class QuestDatabase extends ChangeNotifier {
     );
   }
   //list of notes
-  final List<Quest> currentNotes = [];
-  final List<Quest> questUrgenti = [];
-  final List<Quest> questPrioritarie = [];
-  final List<Quest> questSecondarie = [];
+  final List<Quest> currentQuests = [];
+  final List<Quest> urgentQuests = [];
+  final List<Quest> priorityQuests = [];
+  final List<Quest> sideQuests = [];
   final List<Quest> questInbox = [];
-  final List<Quest> questEseguite = [];
+  final List<Quest> questsCompleted = [];
 
-  //create a note and save
-  Future<void> addNote({required String title, required String description, required int points, required String color,
+  //create a quest and save
+  Future<void> addQuest({required String title, required String description, required int points, required String color,
     required String importance }) async{
     final newNote = Quest();
     newNote.title = title;
@@ -36,32 +36,32 @@ class QuestDatabase extends ChangeNotifier {
 
     //save to db
     await isar.writeTxn(() => isar.quests.put(newNote));
-    fetchNotes();
+    fetchQuests();
     fetchUrgenti();
     fetchPrioritario();
     fetchSecondario();
     fetchInbox();
   }
 
-  //R E A D - notes from db
-  Future<void> fetchNotes() async{
+  //R E A D - quests from db
+  Future<void> fetchQuests() async{
     List<Quest> fetchedNotes = await isar.quests.where()
     .emailEqualTo(Auth().getCurrentUserEmail()!)
         .findAll();
-    currentNotes.clear();
-    currentNotes.addAll(fetchedNotes);
-    sortList(currentNotes);
+    currentQuests.clear();
+    currentQuests.addAll(fetchedNotes);
+    sortList(currentQuests);
     notifyListeners();
   }
-  //fetch only importanza
+  //fetch only
   Future<void> fetchUrgenti() async{
     List<Quest> fetchedNotes = await isar.quests.where()
     .emailEqualTo(Auth().getCurrentUserEmail()!)
     .filter()
     .importanceEqualTo('Urgente')
         .findAll();
-    questUrgenti.clear();
-    questUrgenti.addAll(fetchedNotes);
+    urgentQuests.clear();
+    urgentQuests.addAll(fetchedNotes);
     notifyListeners();
   }
 
@@ -71,8 +71,8 @@ class QuestDatabase extends ChangeNotifier {
         .filter()
         .importanceEqualTo('Prioritario')
         .findAll();
-    questPrioritarie.clear();
-    questPrioritarie.addAll(fetchedNotes);
+    priorityQuests.clear();
+    priorityQuests.addAll(fetchedNotes);
     notifyListeners();
   }
 
@@ -82,8 +82,8 @@ class QuestDatabase extends ChangeNotifier {
         .filter()
         .importanceEqualTo('Secondario')
         .findAll();
-    questSecondarie.clear();
-    questSecondarie.addAll(fetchedNotes);
+    sideQuests.clear();
+    sideQuests.addAll(fetchedNotes);
     notifyListeners();
   }
 
@@ -98,10 +98,10 @@ class QuestDatabase extends ChangeNotifier {
     notifyListeners();
   }
 
-  void sortList(List<Quest> lista) {
+  void sortList(List<Quest> listQ) {
     final orderImportance = ['Urgente', 'Prioritario', 'Secondario', 'Inbox'];
 
-    lista.sort((a, b) {
+    listQ.sort((a, b) {
       int comparisonImportance = orderImportance.indexOf(a.importance).compareTo(orderImportance.indexOf(b.importance));
       if (comparisonImportance != 0) {
         return comparisonImportance;
@@ -112,7 +112,7 @@ class QuestDatabase extends ChangeNotifier {
   }
 
   //U P D A T E - a note in db
-  Future<void> updateNote({required int id, required String title, required String description, required int point, required String importance,
+  Future<void> updateQuest({required int id, required String title, required String description, required int point, required String importance,
     String color = "",
   }) async{
     final existingNote = await isar.quests.get(id);
@@ -123,7 +123,7 @@ class QuestDatabase extends ChangeNotifier {
       existingNote.importance = importance;
       existingNote.color = color;
       await isar.writeTxn(() => isar.quests.put(existingNote));
-      await fetchNotes();
+      await fetchQuests();
       await fetchUrgenti();
       await fetchPrioritario();
       await fetchSecondario();
@@ -134,7 +134,7 @@ class QuestDatabase extends ChangeNotifier {
   //DELETE - a note from the db
   Future<void> deleteNote(int id) async{
     await isar.writeTxn(() => isar.quests.delete(id));
-    await fetchNotes();
+    await fetchQuests();
     await fetchUrgenti();
     await fetchPrioritario();
     await fetchSecondario();
