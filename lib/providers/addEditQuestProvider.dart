@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ColorProviderCreaQuest extends ChangeNotifier {
-String _myString = 'red';
+class AddEditQuestProvider extends ChangeNotifier {
+String _myString = '';
 
 String get myString => _myString;
-
-void setString(String value) {
-  _myString = value;
-  notifyListeners();
-}
 
 void setColor(Color c2) {
   String colorAsString = c2.value.toRadixString(16);

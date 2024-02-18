@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/providers/UserProvider.dart';
 import '../Auth.dart';
-import '../widgets/SelectColor.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen ({super.key});
@@ -27,7 +26,6 @@ class ProfileScreen extends StatelessWidget {
             Padding(
                 padding: const EdgeInsets.only(top: 25),
                 child: ElevatedButton(onPressed: ()=> signOut() , child: const Text('LogOut'))),
-            SelectColor(),
           ],
         ),
       ),

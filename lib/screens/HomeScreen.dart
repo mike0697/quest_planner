@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/providers/quest_database.dart';
 
-import '../providers/providerColorCreaQuest.dart';
+import '../providers/addEditQuestProvider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen ({super.key});
@@ -116,33 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-
-
-
               
                   Padding(padding: const EdgeInsets.only(top: 25),
                       child: Container(
                         alignment: Alignment.topLeft,
                         child: const Text('Seleziona colore: ', style: TextStyle(fontSize: 18),),
                       )
-                  ),
-              
-                  Wrap(
-                      children: [
-                        IconButton(onPressed: (){data['color'] = 'white';}, icon: Icon(Icons.brightness_1_outlined, color: Colors.black,)),
-                        IconButton(onPressed: (){data['color'] = 'blue';}, icon: Icon(Icons.brightness_1, color: Colors.blue,)),
-                        IconButton(onPressed: (){data['color'] = 'green';}, icon: Icon(Icons.brightness_1, color: Colors.green,)),
-                        IconButton(onPressed: (){data['color'] = 'red';}, icon: Icon(Icons.brightness_1, color: Colors.red,)),
-                        IconButton(onPressed: (){data['color'] = 'dpurple';}, icon: Icon(Icons.brightness_1, color: Colors.deepPurple,)),
-                      ],
-                    ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(onPressed: (){data['color'] = 'pink';}, icon: Icon(Icons.brightness_1, color: Colors.pink,)),
-                      IconButton(onPressed: (){data['color'] = 'yellow';}, icon: Icon(Icons.brightness_1, color: Colors.yellow,)),
-                      IconButton(onPressed: (){data['color'] = 'orange';}, icon: Icon(Icons.brightness_1, color: Colors.orange,)),
-                    ],
                   ),
               
               
@@ -158,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             String importanza = _valoreSelezionato;
                             //crea una nota
                             context.read<QuestDatabase>().addNote(titolo: titolo, desc: desc, punti: _currentValueSlider.toInt() ,
-                                color: color, colorq: (Provider.of<ColorProviderCreaQuest>(context).myString),
+                                color: color, colorq: (Provider.of<AddEditQuestProvider>(context).myString),
                                 importanza: importanza);
                             // Pulisci i controller e resetta il form
                             _titoloController.clear();

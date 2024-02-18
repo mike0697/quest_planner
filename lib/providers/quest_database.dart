@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:quest_planner/Auth.dart';
@@ -35,9 +36,6 @@ class QuestDatabase extends ChangeNotifier {
     newNote.color = color;
     newNote.importanza = importanza;
     newNote.qcolor = colorq;
-    if(colorq == null || colorq.isEmpty){
-     print("hello c'è un problema in add quest");
-    }
 
     //save to db
     await isar.writeTxn(() => isar.quests.put(newNote));
@@ -117,14 +115,18 @@ class QuestDatabase extends ChangeNotifier {
   }
 
   //U P D A T E - a note in db
-  Future<void> updateNote(int id, String newText, String desc, int p, {required String importanza, required String color}) async{
+  Future<void> updateNote({required int id, required String title, required String description, required int point, required String importance,
+    String color = "",
+    required String colorq,
+  }) async{
     final existingNote = await isar.quests.get(id);
     if( existingNote != null){
-      existingNote.titolo = newText;
-      existingNote.descrizione = desc;
-      existingNote.ricompensa = p;
-      existingNote.importanza = importanza;
+      existingNote.titolo = title;
+      existingNote.descrizione = description;
+      existingNote.ricompensa = point;
+      existingNote.importanza = importance;
       existingNote.color = color;
+      existingNote.qcolor = colorq;
       await isar.writeTxn(() => isar.quests.put(existingNote));
       await fetchNotes();
       await fetchUrgenti();

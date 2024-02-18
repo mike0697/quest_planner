@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quest_planner/widgets/SelectColor.dart';
 
-import '../providers/providerColorCreaQuest.dart';
+import '../providers/addEditQuestProvider.dart';
 import '../providers/quest_database.dart';
 import 'package:provider/provider.dart';
 class addQuest extends StatefulWidget {
@@ -16,12 +16,11 @@ class _addQuestState extends State<addQuest> {
   TextEditingController controllerTitolo = TextEditingController();
   TextEditingController controllerDesc = TextEditingController();
   double _currentValueSlider = 1.0;
-  String colorQuest = "";
   String _valoreSelezionato= "Inbox";
 
   @override
   void initState() {
-    Provider.of<ColorProviderCreaQuest>(context, listen: false).setColor(Colors.red);
+    Provider.of<AddEditQuestProvider>(context, listen: false).setColor(Colors.indigo);
     super.initState();
   }
 
@@ -96,24 +95,6 @@ class _addQuestState extends State<addQuest> {
                   child: const Text('Seleziona colore: ', style: TextStyle(fontSize: 18),),
                 )
             ),
-
-            Wrap(
-              children: [
-                IconButton(onPressed: (){colorQuest = 'white';}, icon: const Icon(Icons.brightness_1_outlined, color: Colors.black,)),
-                IconButton(onPressed: (){colorQuest = 'blue';}, icon: const Icon(Icons.brightness_1, color: Colors.blue,)),
-                IconButton(onPressed: (){colorQuest = 'green';}, icon: const Icon(Icons.brightness_1, color: Colors.green,)),
-                IconButton(onPressed: (){colorQuest = 'red';}, icon: const Icon(Icons.brightness_1, color: Colors.red,)),
-                IconButton(onPressed: (){colorQuest = 'dpurple';}, icon: const Icon(Icons.brightness_1, color: Colors.deepPurple,)),
-              ],
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(onPressed: (){colorQuest = 'pink';}, icon: Icon(Icons.brightness_1, color: Colors.pink,)),
-                IconButton(onPressed: (){colorQuest = 'yellow';}, icon: Icon(Icons.brightness_1, color: Colors.yellow,)),
-                IconButton(onPressed: (){colorQuest = 'orange';}, icon: Icon(Icons.brightness_1, color: Colors.orange,)),
-              ],
-            ),
             SelectColor(),
           ],
         ),
@@ -130,8 +111,8 @@ class _addQuestState extends State<addQuest> {
             context.read<QuestDatabase>().addNote(
                 titolo: controllerTitolo.text, desc: controllerDesc.text,
                 punti: _currentValueSlider.toInt(),
-                color: colorQuest,
-                colorq: (Provider.of<ColorProviderCreaQuest>(context, listen: false).myString),
+                color: "",
+                colorq: (Provider.of<AddEditQuestProvider>(context, listen: false).myString),
                 importanza: _valoreSelezionato);
             Navigator.of(context).pop();},
         )

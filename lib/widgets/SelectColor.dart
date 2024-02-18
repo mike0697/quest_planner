@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/providerColorCreaQuest.dart';
+import '../providers/addEditQuestProvider.dart';
 
 class SelectColor extends StatefulWidget {
   const SelectColor({super.key});
@@ -38,7 +38,7 @@ class _SelectColorState extends State<SelectColor> {
             // Use the screenPickerColor as start color.
             color: screenPickerColor,
             // Update the screenPickerColor using the callback.
-            onColorChanged: (Color color)  {Provider.of<ColorProviderCreaQuest>(context, listen: false).setColor(color);
+            onColorChanged: (Color color)  {Provider.of<AddEditQuestProvider>(context, listen: false).setColor(color);
                   setState(() => screenPickerColor = color);
                 },
             width: 22,
@@ -53,10 +53,6 @@ class _SelectColorState extends State<SelectColor> {
               ColorPickerType.both: false,
               ColorPickerType.wheel: false,
             },
-            heading: Text(
-              'Seleziona colore',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
             subheading: Text('Select color shade',style: Theme.of(context).textTheme.titleSmall,),
           ),
         ),
