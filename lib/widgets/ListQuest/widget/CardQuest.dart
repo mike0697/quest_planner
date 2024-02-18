@@ -37,12 +37,12 @@ class _CardQuestState extends State<CardQuest> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      surfaceTintColor: Color(int.parse(widget.quest.qcolor, radix: 16)),
+      surfaceTintColor: Color(int.parse(widget.quest.color, radix: 16)),
       //surfaceTintColor: getCardColor(widget.quest.color),
       child: Column(
         children: [ ListTile(
-          title: Text(widget.quest.titolo),
-          subtitle: Text(widget.quest.descrizione),
+          title: Text(widget.quest.title),
+          subtitle: Text(widget.quest.description),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -64,40 +64,16 @@ class _CardQuestState extends State<CardQuest> {
           Container(
               padding: const EdgeInsets.only(left: 16),
               alignment: Alignment.topLeft,
-              child: Text(widget.quest.importanza)),
+              child: Text(widget.quest.importance)),
           const Padding(padding: EdgeInsets.only(bottom: 10)),
         ],
       ),
     );
   }
 
-
-  Color getCardColor(String scolor) {
-    switch (scolor) {
-      case 'red':
-        return Colors.red;
-      case 'green':
-        return Colors.green;
-      case 'dpurple':
-        return Colors.deepPurpleAccent;
-      case 'blue':
-        return Colors.blue;
-      case 'yellow':
-        return Colors.yellow;
-      case 'orange':
-        return Colors.orange;
-      case 'white':
-        return Colors.white;
-      case 'pink':
-        return Colors.pink;
-      default:
-        return Colors.deepPurple;
-    }
-  }
-
   //esegui note
   void eseguiNote(Quest note) {
-    context.read<UserProvider>().addPunti(note.ricompensa);
+    context.read<UserProvider>().addPunti(note.points);
     deleteNote(note.id);
   }
 
@@ -107,7 +83,7 @@ class _CardQuestState extends State<CardQuest> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Conferma'),
-            content: Text('Eliminare la quest: ${quest.titolo} ?'),
+            content: Text('Eliminare la quest: ${quest.title} ?'),
             actions: <Widget>[
               TextButton(
                 child: const Text('Annulla'),

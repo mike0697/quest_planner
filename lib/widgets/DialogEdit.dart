@@ -25,14 +25,14 @@ class _MyWidgetState extends State<MyWidget> {
   @override
   void initState() {
     super.initState();
-    _valoreSelezionato = widget.quest.importanza;
-    if(widget.quest.importanza == null || widget.quest.importanza.isEmpty) {
+    _valoreSelezionato = widget.quest.importance;
+    if(widget.quest.importance == null || widget.quest.importance.isEmpty) {
       _valoreSelezionato = 'Inbox';
     }
-    Provider.of<AddEditQuestProvider>(context, listen: false).setColor(Color(int.parse(widget.quest.qcolor, radix: 16)));
-    controllerTitolo = TextEditingController(text: widget.quest.titolo);
-    controllerDesc = TextEditingController(text: widget.quest.descrizione);
-    _currentValueSlider = widget.quest.ricompensa.toDouble();
+    Provider.of<AddEditQuestProvider>(context, listen: false).setColor(Color(int.parse(widget.quest.color, radix: 16)));
+    controllerTitolo = TextEditingController(text: widget.quest.title);
+    controllerDesc = TextEditingController(text: widget.quest.description);
+    _currentValueSlider = widget.quest.points.toDouble();
   }
 
   @override
@@ -47,7 +47,7 @@ class _MyWidgetState extends State<MyWidget> {
           children: [
             Align(
                 alignment: Alignment.topLeft,
-                child: Text('Titolo: ${widget.quest.titolo}')),
+                child: Text('Titolo: ${widget.quest.title}')),
             TextField(
               controller: controllerTitolo,
               decoration: const InputDecoration(hintText: "Titolo"),),
@@ -55,14 +55,14 @@ class _MyWidgetState extends State<MyWidget> {
             //descrizione
             Align(
                 alignment: Alignment.topLeft,
-                child: Text('Descrizione: ${widget.quest.descrizione}')),
+                child: Text('Descrizione: ${widget.quest.description}')),
             TextField(
               controller: controllerDesc,
               decoration: const InputDecoration(hintText: "Descrizione"),),
             //punti
             Align(
                 alignment: Alignment.topLeft,
-                child: Text('Riconpensa: ${widget.quest.ricompensa}')),
+                child: Text('Riconpensa: ${widget.quest.points}')),
             Slider(
               value: _currentValueSlider,
               onChanged: (double value) {setState(() {_currentValueSlider = value; } ); },
@@ -73,7 +73,7 @@ class _MyWidgetState extends State<MyWidget> {
             ),
             //seleziona importanza
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Align(
                 alignment: Alignment.center,
                 child: DropdownButton<String>(
@@ -130,6 +130,6 @@ class _MyWidgetState extends State<MyWidget> {
   void updateNote(Quest quest, String title, String description, int point){
     context.read<QuestDatabase>().updateNote(id: quest.id, title: title, description: description,
         point: point,importance: _valoreSelezionato,
-        colorq: (Provider.of<AddEditQuestProvider>(context, listen: false).myColor));
+        color: (Provider.of<AddEditQuestProvider>(context, listen: false).myColor));
   }
 }

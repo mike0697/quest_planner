@@ -5,12 +5,11 @@ part 'quest.g.dart';
 @Collection()
 class Quest{
   Id id = Isar.autoIncrement;
-  late String titolo;
-  late String descrizione;
-  late int ricompensa;
+  late String title;
+  late String description;
+  late int points;
   @Index()
   late String email;
   late String color;
-  late String importanza;
-  late String qcolor;
+  late String importance;
 }

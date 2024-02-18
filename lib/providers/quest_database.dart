@@ -25,16 +25,14 @@ class QuestDatabase extends ChangeNotifier {
 
   //create a note and save
   Future<void> addNote({required String title, required String description, required int points, required String color,
-    required String colorq,
     required String importance }) async{
     final newNote = Quest();
-    newNote.titolo = title;
-    newNote.descrizione = description;
-    newNote.ricompensa = points;
+    newNote.title = title;
+    newNote.description = description;
+    newNote.points = points;
     newNote.email = Auth().getCurrentUserEmail()!;
     newNote.color = color;
-    newNote.importanza = importance;
-    newNote.qcolor = colorq;
+    newNote.importance = importance;
 
     //save to db
     await isar.writeTxn(() => isar.quests.put(newNote));
@@ -60,7 +58,7 @@ class QuestDatabase extends ChangeNotifier {
     List<Quest> fetchedNotes = await isar.quests.where()
     .emailEqualTo(Auth().getCurrentUserEmail()!)
     .filter()
-    .importanzaEqualTo('Urgente')
+    .importanceEqualTo('Urgente')
         .findAll();
     questUrgenti.clear();
     questUrgenti.addAll(fetchedNotes);
@@ -71,7 +69,7 @@ class QuestDatabase extends ChangeNotifier {
     List<Quest> fetchedNotes = await isar.quests.where()
         .emailEqualTo(Auth().getCurrentUserEmail()!)
         .filter()
-        .importanzaEqualTo('Prioritario')
+        .importanceEqualTo('Prioritario')
         .findAll();
     questPrioritarie.clear();
     questPrioritarie.addAll(fetchedNotes);
@@ -82,7 +80,7 @@ class QuestDatabase extends ChangeNotifier {
     List<Quest> fetchedNotes = await isar.quests.where()
         .emailEqualTo(Auth().getCurrentUserEmail()!)
         .filter()
-        .importanzaEqualTo('Secondario')
+        .importanceEqualTo('Secondario')
         .findAll();
     questSecondarie.clear();
     questSecondarie.addAll(fetchedNotes);
@@ -93,7 +91,7 @@ class QuestDatabase extends ChangeNotifier {
     List<Quest> fetchedNotes = await isar.quests.where()
         .emailEqualTo(Auth().getCurrentUserEmail()!)
         .filter()
-        .importanzaEqualTo('Inbox')
+        .importanceEqualTo('Inbox')
         .findAll();
     questInbox.clear();
     questInbox.addAll(fetchedNotes);
@@ -104,7 +102,7 @@ class QuestDatabase extends ChangeNotifier {
     final orderImportance = ['Urgente', 'Prioritario', 'Secondario', 'Inbox'];
 
     lista.sort((a, b) {
-      int comparisonImportance = orderImportance.indexOf(a.importanza).compareTo(orderImportance.indexOf(b.importanza));
+      int comparisonImportance = orderImportance.indexOf(a.importance).compareTo(orderImportance.indexOf(b.importance));
       if (comparisonImportance != 0) {
         return comparisonImportance;
       } else {
@@ -116,16 +114,14 @@ class QuestDatabase extends ChangeNotifier {
   //U P D A T E - a note in db
   Future<void> updateNote({required int id, required String title, required String description, required int point, required String importance,
     String color = "",
-    required String colorq,
   }) async{
     final existingNote = await isar.quests.get(id);
     if(existingNote != null){
-      existingNote.titolo = title;
-      existingNote.descrizione = description;
-      existingNote.ricompensa = point;
-      existingNote.importanza = importance;
+      existingNote.title = title;
+      existingNote.description = description;
+      existingNote.points = point;
+      existingNote.importance = importance;
       existingNote.color = color;
-      existingNote.qcolor = colorq;
       await isar.writeTxn(() => isar.quests.put(existingNote));
       await fetchNotes();
       await fetchUrgenti();

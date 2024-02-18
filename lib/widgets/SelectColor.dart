@@ -30,7 +30,7 @@ class _SelectColorState extends State<SelectColor> {
     dialogSelectColor = const Color(0xFFA239CA); // A purple color.
     //If the quest exists, initialize it with its color
     if(widget.quest != null){
-      screenPickerColor = Color(int.parse(widget.quest!.qcolor, radix: 16));
+      screenPickerColor = Color(int.parse(widget.quest!.color, radix: 16));
     }
   }
 
