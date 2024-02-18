@@ -109,11 +109,11 @@ class _addQuestState extends State<addQuest> {
           child: const Text('Invia'),
           onPressed: () {
             context.read<QuestDatabase>().addNote(
-                titolo: controllerTitolo.text, desc: controllerDesc.text,
-                punti: _currentValueSlider.toInt(),
+                title: controllerTitolo.text, description: controllerDesc.text,
+                points: _currentValueSlider.toInt(),
                 color: "",
                 colorq: (Provider.of<AddEditQuestProvider>(context, listen: false).myColor),
-                importanza: _valoreSelezionato);
+                importance: _valoreSelezionato);
             Navigator.of(context).pop();},
         )
       ],

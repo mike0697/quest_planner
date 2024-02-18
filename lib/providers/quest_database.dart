@@ -25,16 +25,16 @@ class QuestDatabase extends ChangeNotifier {
   final List<Quest> questEseguite = [];
 
   //create a note and save
-  Future<void> addNote({required String titolo, required String desc, required int punti, required String color,
+  Future<void> addNote({required String title, required String description, required int points, required String color,
     required String colorq,
-    required String importanza }) async{
+    required String importance }) async{
     final newNote = Quest();
-    newNote.titolo = titolo;
-    newNote.descrizione = desc;
-    newNote.ricompensa = punti;
+    newNote.titolo = title;
+    newNote.descrizione = description;
+    newNote.ricompensa = points;
     newNote.email = Auth().getCurrentUserEmail()!;
     newNote.color = color;
-    newNote.importanza = importanza;
+    newNote.importanza = importance;
     newNote.qcolor = colorq;
 
     //save to db

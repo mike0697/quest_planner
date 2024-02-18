@@ -136,9 +136,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             String color = data["color"];
                             String importanza = _valoreSelezionato;
                             //crea una nota
-                            context.read<QuestDatabase>().addNote(titolo: titolo, desc: desc, punti: _currentValueSlider.toInt() ,
+                            context.read<QuestDatabase>().addNote(title: titolo, description: desc,
+                                points: _currentValueSlider.toInt(),
                                 color: color, colorq: (Provider.of<AddEditQuestProvider>(context).myColor),
-                                importanza: importanza);
+                                importance: importanza);
                             // Pulisci i controller e resetta il form
                             _titoloController.clear();
                             _descrizioneController.clear();
