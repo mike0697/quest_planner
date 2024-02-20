@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/providers/UserProvider.dart';
-import 'package:quest_planner/widgets/app_large_text.dart';
 import '../Auth.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -10,28 +9,20 @@ class ProfileScreen extends StatelessWidget {
   Future<void> signOut() async {
     await Auth().signOut();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           const SliverAppBar(
-            //backgroundColor: Colors.indigoAccent[100],
-            expandedHeight: 140,
+            expandedHeight: 160,
             floating: true,
-            pinned: false,
+            pinned: true,
             stretch: false,
             centerTitle: false,
-            flexibleSpace: FlexibleSpaceBar(
-              centerTitle: false,
-              expandedTitleScale: 1.5,
-              titlePadding: EdgeInsets.only(bottom: 30, left: 20),
-              title: Text("Quest Planner", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),),
-            ),
+            title: Text("Quest Planner"),
           ),
           buildImages(context),
-
   ],),);
 
   }

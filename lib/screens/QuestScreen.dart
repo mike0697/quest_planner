@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quest_planner/widgets/CircleTapBar.dart';
 import 'package:quest_planner/widgets/ListQuest/ListQuest.dart';
 import 'package:quest_planner/widgets/ListQuest/ListQuestInbox.dart';
 import 'package:quest_planner/widgets/ListQuest/ListQuestPriority.dart';
 import 'package:quest_planner/widgets/ListQuest/ListQuestSecondary.dart';
 import 'package:quest_planner/widgets/ListQuest/ListQuestUrgenti.dart';
-import 'package:quest_planner/widgets/app_large_text.dart';
 import '../widgets/addQuest.dart';
 
 class QuestScreen extends StatefulWidget {
@@ -13,70 +11,54 @@ class QuestScreen extends StatefulWidget {
   @override
   State<QuestScreen> createState() => _QuestScreenState();
 }
-class _QuestScreenState extends State<QuestScreen> with TickerProviderStateMixin{
+class _QuestScreenState extends State<QuestScreen> with TickerProviderStateMixin {
   @override
-  Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 5, vsync: this);
-    return Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
+  Widget build(BuildContext context) => Scaffold(
+    body: DefaultTabController(
+      length: 5,
+      child: NestedScrollView(
+        headerSliverBuilder: (context, value) {
+          return [
+            const SliverAppBar(
+              expandedHeight: 160,
+              floating: true,
+              pinned: true,
+              stretch: false,
+              centerTitle: false,
+              title: Text('Quest Planner'),
+              bottom: TabBar(
+                isScrollable: true,
+                labelPadding: EdgeInsets.only(left: 20, right: 20),
+                labelColor: Colors.black,
+                unselectedLabelColor: Colors.grey,
+                tabAlignment: TabAlignment.center,
+                indicatorSize: TabBarIndicatorSize.label,
+                //indicator: CircleTabIndicator(color: Colors.indigo, radius: 5.0),
+                tabs: [
+                  Tab(child: Text('Tutti', style: TextStyle(fontSize: 15),),),
+                  Tab(child: Text('Urgente', style: TextStyle(fontSize: 15),)),
+                  Tab(child: Text('Prioritario', style: TextStyle(fontSize: 15),)),
+                  Tab(child: Text('Secondario', style: TextStyle(fontSize: 15),)),
+                  Tab(child: Text('Inbox', style: TextStyle(fontSize: 15),)),
+                ],
+              ),
+            ),
+          ];
+        },
+          body: const TabBarView(
             children: [
-              //menu text
-              Container(
-                padding: const EdgeInsets.only(top: 70, left: 20),
-              ),
-              const SizedBox(height: 40,),
-              //discover text
-              Container(
-                  margin: const EdgeInsets.only(left: 20),
-                  alignment: Alignment.topLeft,
-                  child: AppLargeText(text: 'Quest Planner'),
-              ),
-              const SizedBox(height: 30,),
-              //taoBar
-              Container(
-                child: TabBar(
-                  controller: _tabController,
-                  isScrollable: true,
-                  labelPadding: const EdgeInsets.only(left: 20, right: 20),
-                  labelColor: Colors.black,
-                  unselectedLabelColor: Colors.grey,
-                  tabAlignment: TabAlignment.center,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  indicator: CircleTabIndicator(color: Colors.indigo, radius: 5.0),
-                  tabs: const [
-                    Tab(child: Text('Tutti', style: TextStyle(fontSize: 15),),),
-                    Tab(child: Text('Urgente', style: TextStyle(fontSize: 15),)),
-                    Tab(child: Text('Prioritario', style: TextStyle(fontSize: 15),)),
-                    Tab(child: Text('Secondario', style: TextStyle(fontSize: 15),)),
-                    Tab(child: Text('Inbox', style: TextStyle(fontSize: 15),)),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10,),
-          
-              Container(
-                height: 570,
-                width: double.maxFinite,
-                child: TabBarView(
-                  controller: _tabController,
-                  children: const[
-                    ListQuest(priority: 'all',),
-                    ListQuestUrgent(),
-                    ListQuestPriority(),
-                    ListQuestSecondary(),
-                    ListQuestInbox(),
-                  ],
-                )
-              )
-          
+              ListQuest(priority: 'all',),
+              ListQuestUrgent(),
+              ListQuestPriority(),
+              ListQuestSecondary(),
+              ListQuestInbox(),
             ],
           ),
         ),
-      floatingActionButton: FloatingActionButton(onPressed: () => _showDialogAdd(context), child: Icon(Icons.add),),
-    );
+      ),
+    floatingActionButton: FloatingActionButton(onPressed: () => _showDialogAdd(context), child: Icon(Icons.add),),
+  );
 
-  }
   void _showDialogAdd(BuildContext context) {
     showDialog(
       context: context,
