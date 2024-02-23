@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quest_planner/providers/UserProvider.dart';
+import 'package:quest_planner/screens/addQuestPage.dart';
 import '../Auth.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -23,7 +24,11 @@ class ProfileScreen extends StatelessWidget {
             title: Text("Quest Planner"),
           ),
           buildImages(context),
-  ],),);
+  ],),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Navigator.push(context, MaterialPageRoute<void>(builder: (context) => AddQuestPage()));
+      }, child: const Icon(Icons.cabin), ),
+    );
 
   }
   Widget buildImages(BuildContext context) => SliverToBoxAdapter(
