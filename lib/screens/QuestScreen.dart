@@ -5,6 +5,7 @@ import 'package:quest_planner/widgets/ListQuest/ListQuestPriority.dart';
 import 'package:quest_planner/widgets/ListQuest/ListQuestSecondary.dart';
 import 'package:quest_planner/widgets/ListQuest/ListQuestUrgenti.dart';
 import '../widgets/addQuest.dart';
+import 'addQuestPage.dart';
 
 class QuestScreen extends StatefulWidget {
   const QuestScreen({super.key});
@@ -56,7 +57,9 @@ class _QuestScreenState extends State<QuestScreen> with TickerProviderStateMixin
           ),
         ),
       ),
-    floatingActionButton: FloatingActionButton(onPressed: () => _showDialogAdd(context), child: Icon(Icons.add),),
+    floatingActionButton: FloatingActionButton(onPressed: () {
+      Navigator.push(context, MaterialPageRoute<void>(builder: (context) => AddQuestPage()));
+    }, child: const Icon(Icons.add), ),
   );
 
   void _showDialogAdd(BuildContext context) {

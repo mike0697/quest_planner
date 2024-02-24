@@ -1,28 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/quest.dart';
 import '../providers/addEditQuestProvider.dart';
 import '../providers/quest_database.dart';
 import '../widgets/SelectColor.dart';
 
 
-class AddQuestPage extends StatefulWidget {
-  const AddQuestPage({super.key});
+class EditQuestPage extends StatefulWidget {
+  final Quest quest;
+
+  const EditQuestPage({Key? key, required this.quest}) : super(key: key);
 
   @override
-  State<AddQuestPage> createState() => _AddQuestPageState();
+  State<EditQuestPage> createState() => _AddQuestPageState();
 }
 
-class _AddQuestPageState extends State<AddQuestPage> {
+class _AddQuestPageState extends State<EditQuestPage> {
   TextEditingController controllerTitolo = TextEditingController();
   TextEditingController controllerDesc = TextEditingController();
   double _currentValueSlider = 1.0;
-  String _valoreSelezionato= "Inbox";
+  String _valoreSelezionato= "";
 
   @override
   void initState() {
-    Provider.of<AddEditQuestProvider>(context, listen: false).setColor(Colors.indigo);
     super.initState();
+    _valoreSelezionato = widget.quest.importance;
+    if(widget.quest.importance == null || widget.quest.importance.isEmpty) {
+      _valoreSelezionato = 'Inbox';
+    }
+    Provider.of<AddEditQuestProvider>(context, listen: false).setColor(Color(int.parse(widget.quest.color, radix: 16)));
+    controllerTitolo = TextEditingController(text: widget.quest.title);
+    controllerDesc = TextEditingController(text: widget.quest.description);
+    _currentValueSlider = widget.quest.points.toDouble();
   }
   @override
   Widget build(BuildContext context) {
@@ -37,8 +47,8 @@ class _AddQuestPageState extends State<AddQuestPage> {
               //ElevatedButton(onPressed: (){Navigator.pop(context);}, child: const Icon(Icons.back_hand)),
               //title
               Container(
-                alignment: Alignment.topLeft,
-                  child: const Text('Crea nuova quest', style: TextStyle(color: Colors.black, fontSize: 32),)),
+                  alignment: Alignment.topLeft,
+                  child: const Text('Modifica quest', style: TextStyle(color: Colors.black, fontSize: 32),)),
               const Padding(padding: EdgeInsets.only(bottom: 30)),
               const Align(
                   alignment: Alignment.topLeft,
@@ -46,7 +56,7 @@ class _AddQuestPageState extends State<AddQuestPage> {
               TextField(
                 controller: controllerTitolo,
                 decoration: const InputDecoration(hintText: "Titolo"),),
-          
+
               //descrizione
               const Align(
                   alignment: Alignment.topLeft,
@@ -58,7 +68,7 @@ class _AddQuestPageState extends State<AddQuestPage> {
               const Align(
                   alignment: Alignment.topLeft,
                   child: Text('Riconpensa: ',style: TextStyle(color: Colors.black, fontSize: 18),)),
-          
+
               Slider(
                 value: _currentValueSlider,
                 onChanged: (double value) {setState(() {_currentValueSlider = value; } ); },
@@ -103,8 +113,8 @@ class _AddQuestPageState extends State<AddQuestPage> {
                     child: const Text('Seleziona colore: ', style: TextStyle(fontSize: 18),),
                   )
               ),
-              const SelectColor(quest: null),
-          
+              SelectColor(quest: widget.quest),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -121,11 +131,7 @@ class _AddQuestPageState extends State<AddQuestPage> {
                     child: TextButton(
                       child: const Text('Invia', style: TextStyle(fontSize: 18),),
                       onPressed: () {
-                        context.read<QuestDatabase>().addQuest(
-                            title: controllerTitolo.text, description: controllerDesc.text,
-                            points: _currentValueSlider.toInt(),
-                            color: (Provider.of<AddEditQuestProvider>(context, listen: false).myColor),
-                            importance: _valoreSelezionato);
+                        updateQuest(widget.quest, controllerTitolo.text, controllerDesc.text, _currentValueSlider.toInt());
                         Navigator.of(context).pop();},
                     ),
                   ),
@@ -137,5 +143,10 @@ class _AddQuestPageState extends State<AddQuestPage> {
         ),
       ),
     );
+  }
+  void updateQuest(Quest quest, String title, String description, int point){
+    context.read<QuestDatabase>().updateQuest(id: quest.id, title: title, description: description,
+        point: point,importance: _valoreSelezionato,
+        color: (Provider.of<AddEditQuestProvider>(context, listen: false).myColor));
   }
 }

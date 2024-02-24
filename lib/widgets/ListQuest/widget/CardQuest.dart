@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quest_planner/screens/editQuestPage.dart';
 
 import '../../../models/quest.dart';
 import '../../../providers/UserProvider.dart';
@@ -48,7 +49,7 @@ class _CardQuestState extends State<CardQuest> {
             children: [
               //editButton
               IconButton(
-                  onPressed: () => _showDialogEdit(context, widget.quest),
+                  onPressed: () => Navigator.push(context, MaterialPageRoute<void>(builder: (context) => EditQuestPage(quest: widget.quest))),
                   icon: const Icon(Icons.edit)),
               //delete button
               IconButton(

@@ -25,9 +25,6 @@ class ProfileScreen extends StatelessWidget {
           ),
           buildImages(context),
   ],),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        Navigator.push(context, MaterialPageRoute<void>(builder: (context) => AddQuestPage()));
-      }, child: const Icon(Icons.cabin), ),
     );
 
   }
