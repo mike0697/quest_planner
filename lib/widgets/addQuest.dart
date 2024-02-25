@@ -105,7 +105,7 @@ class _addQuestState extends State<addQuest> {
           onPressed: () {
             Navigator.of(context).pop();},
         ),
-        TextButton(
+        /*TextButton(
           child: const Text('Invia'),
           onPressed: () {
             context.read<QuestDatabase>().addQuest(
@@ -115,6 +115,8 @@ class _addQuestState extends State<addQuest> {
                 importance: _valoreSelezionato);
             Navigator.of(context).pop();},
         )
+
+         */
       ],
     );
   }

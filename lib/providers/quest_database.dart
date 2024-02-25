@@ -25,7 +25,7 @@ class QuestDatabase extends ChangeNotifier {
 
   //create a quest and save
   Future<void> addQuest({required String title, required String description, required int points, required String color,
-    required String importance }) async{
+    required String importance, required int countExecutions, required bool infinity }) async{
     final newNote = Quest();
     newNote.title = title;
     newNote.description = description;
@@ -33,6 +33,8 @@ class QuestDatabase extends ChangeNotifier {
     newNote.email = Auth().getCurrentUserEmail()!;
     newNote.color = color;
     newNote.importance = importance;
+    newNote.countExecutions = countExecutions;
+    newNote.infinity = infinity;
 
     //save to db
     await isar.writeTxn(() => isar.quests.put(newNote));

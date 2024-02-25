@@ -12,4 +12,6 @@ class Quest{
   late String email;
   late String color;
   late String importance;
+  late bool infinity;
+  late int countExecutions;
 }

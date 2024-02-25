@@ -14,15 +14,21 @@ class AddQuestPage extends StatefulWidget {
 }
 
 class _AddQuestPageState extends State<AddQuestPage> {
-  TextEditingController controllerTitolo = TextEditingController();
+  TextEditingController controllerTitle = TextEditingController();
   TextEditingController controllerDesc = TextEditingController();
   double _currentValueSlider = 1.0;
-  String _valoreSelezionato= "Inbox";
+  String _selectedImportance= "Inbox";
+  int countExecutions = 0;
 
   @override
   void initState() {
-    Provider.of<AddEditQuestProvider>(context, listen: false).setColor(Colors.indigo);
     super.initState();
+    Future.delayed(Duration.zero, ()
+    {
+      Provider.of<AddEditQuestProvider>(context, listen: false).setColor(
+          Colors.indigo);
+    });
+
   }
   @override
   Widget build(BuildContext context) {
@@ -44,7 +50,7 @@ class _AddQuestPageState extends State<AddQuestPage> {
                   alignment: Alignment.topLeft,
                   child: Text('Titolo: ',style: TextStyle(color: Colors.black, fontSize: 18),)),
               TextField(
-                controller: controllerTitolo,
+                controller: controllerTitle,
                 decoration: const InputDecoration(hintText: "Titolo"),),
           
               //descrizione
@@ -73,7 +79,7 @@ class _AddQuestPageState extends State<AddQuestPage> {
                 child: Align(
                   alignment: Alignment.center,
                   child: DropdownButton<String>(
-                    value: _valoreSelezionato,
+                    value: _selectedImportance,
                     icon: const Icon(Icons.arrow_downward),
                     iconSize: 24,
                     elevation: 16,
@@ -84,7 +90,7 @@ class _AddQuestPageState extends State<AddQuestPage> {
                     ),
                     onChanged: (newValue) {
                       setState(() {
-                        _valoreSelezionato = newValue!;
+                        _selectedImportance = newValue!;
                       });
                     },
                     items: <String>['Inbox', 'Secondario', 'Prioritario', 'Urgente']
@@ -122,10 +128,13 @@ class _AddQuestPageState extends State<AddQuestPage> {
                       child: const Text('Invia', style: TextStyle(fontSize: 18),),
                       onPressed: () {
                         context.read<QuestDatabase>().addQuest(
-                            title: controllerTitolo.text, description: controllerDesc.text,
+                            title: controllerTitle.text, description: controllerDesc.text,
                             points: _currentValueSlider.toInt(),
                             color: (Provider.of<AddEditQuestProvider>(context, listen: false).myColor),
-                            importance: _valoreSelezionato);
+                            importance: _selectedImportance,
+                            countExecutions: countExecutions,
+                            infinity: false,
+                        );
                         Navigator.of(context).pop();},
                     ),
                   ),

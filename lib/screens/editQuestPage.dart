@@ -17,20 +17,23 @@ class EditQuestPage extends StatefulWidget {
 }
 
 class _AddQuestPageState extends State<EditQuestPage> {
-  TextEditingController controllerTitolo = TextEditingController();
+  TextEditingController controllerTitle = TextEditingController();
   TextEditingController controllerDesc = TextEditingController();
   double _currentValueSlider = 1.0;
-  String _valoreSelezionato= "";
+  String _selectedImportance= "";
 
   @override
   void initState() {
     super.initState();
-    _valoreSelezionato = widget.quest.importance;
+    _selectedImportance = widget.quest.importance;
     if(widget.quest.importance == null || widget.quest.importance.isEmpty) {
-      _valoreSelezionato = 'Inbox';
+      _selectedImportance = 'Inbox';
     }
-    Provider.of<AddEditQuestProvider>(context, listen: false).setColor(Color(int.parse(widget.quest.color, radix: 16)));
-    controllerTitolo = TextEditingController(text: widget.quest.title);
+    Future.delayed(Duration.zero, () {
+      Provider.of<AddEditQuestProvider>(context, listen: false).setColor(
+          Color(int.parse(widget.quest.color, radix: 16)));
+    });
+    controllerTitle = TextEditingController(text: widget.quest.title);
     controllerDesc = TextEditingController(text: widget.quest.description);
     _currentValueSlider = widget.quest.points.toDouble();
   }
@@ -54,7 +57,7 @@ class _AddQuestPageState extends State<EditQuestPage> {
                   alignment: Alignment.topLeft,
                   child: Text('Titolo: ',style: TextStyle(color: Colors.black, fontSize: 18),)),
               TextField(
-                controller: controllerTitolo,
+                controller: controllerTitle,
                 decoration: const InputDecoration(hintText: "Titolo"),),
 
               //descrizione
@@ -83,7 +86,7 @@ class _AddQuestPageState extends State<EditQuestPage> {
                 child: Align(
                   alignment: Alignment.center,
                   child: DropdownButton<String>(
-                    value: _valoreSelezionato,
+                    value: _selectedImportance,
                     icon: const Icon(Icons.arrow_downward),
                     iconSize: 24,
                     elevation: 16,
@@ -94,7 +97,7 @@ class _AddQuestPageState extends State<EditQuestPage> {
                     ),
                     onChanged: (newValue) {
                       setState(() {
-                        _valoreSelezionato = newValue!;
+                        _selectedImportance = newValue!;
                       });
                     },
                     items: <String>['Inbox', 'Secondario', 'Prioritario', 'Urgente']
@@ -131,7 +134,7 @@ class _AddQuestPageState extends State<EditQuestPage> {
                     child: TextButton(
                       child: const Text('Invia', style: TextStyle(fontSize: 18),),
                       onPressed: () {
-                        updateQuest(widget.quest, controllerTitolo.text, controllerDesc.text, _currentValueSlider.toInt());
+                        updateQuest(widget.quest, controllerTitle.text, controllerDesc.text, _currentValueSlider.toInt());
                         Navigator.of(context).pop();},
                     ),
                   ),
@@ -146,7 +149,7 @@ class _AddQuestPageState extends State<EditQuestPage> {
   }
   void updateQuest(Quest quest, String title, String description, int point){
     context.read<QuestDatabase>().updateQuest(id: quest.id, title: title, description: description,
-        point: point,importance: _valoreSelezionato,
+        point: point,importance: _selectedImportance,
         color: (Provider.of<AddEditQuestProvider>(context, listen: false).myColor));
   }
 }
