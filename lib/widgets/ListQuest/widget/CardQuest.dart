@@ -46,7 +46,7 @@ class _CardQuestState extends State<CardQuest> {
                   onPressed: () => _showDialogDelete(context, widget.quest),
                   icon: const Icon(Icons.clear)),
               //esegui
-              IconButton(onPressed: () => eseguiNote(widget.quest),
+              IconButton(onPressed: () => completeQuest(widget.quest),
                   icon: const Icon(Icons.check)),
             ],
           ),
@@ -63,9 +63,11 @@ class _CardQuestState extends State<CardQuest> {
   }
 
   //esegui note
-  void eseguiNote(Quest note) {
-    context.read<UserProvider>().addPunti(note.points);
-    deleteNote(note.id);
+  void completeQuest(Quest quest) {
+    context.read<UserProvider>().addPunti(quest.points);
+    if(quest.infinity == false) {
+      deleteNote(quest.id);
+    }
   }
 
   void _showDialogDelete(BuildContext context, Quest quest) {

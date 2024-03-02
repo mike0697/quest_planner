@@ -160,7 +160,7 @@ class _AddQuestPageState extends State<AddQuestPage> {
                             color: (Provider.of<AddEditQuestProvider>(context, listen: false).myColor),
                             importance: _selectedImportance,
                             countExecutions: countExecutions,
-                            infinity: false,
+                            infinity: _isInfinite!,
                         );
                         Navigator.of(context).pop();},
                     ),
