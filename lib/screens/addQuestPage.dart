@@ -16,9 +16,12 @@ class AddQuestPage extends StatefulWidget {
 class _AddQuestPageState extends State<AddQuestPage> {
   TextEditingController controllerTitle = TextEditingController();
   TextEditingController controllerDesc = TextEditingController();
+  TextEditingController controllerCount = TextEditingController();
   double _currentValueSlider = 1.0;
   String _selectedImportance= "Inbox";
   int countExecutions = 0;
+  bool? _isInfinite = false;
+  bool _isVisible = true;
 
   @override
   void initState() {
@@ -53,14 +56,26 @@ class _AddQuestPageState extends State<AddQuestPage> {
                 controller: controllerTitle,
                 decoration: const InputDecoration(hintText: "Titolo"),),
           
-              //descrizione
+              //description
               const Align(
                   alignment: Alignment.topLeft,
                   child: Text('Descrizione: ',style: TextStyle(color: Colors.black, fontSize: 18),)),
               TextField(
                 controller: controllerDesc,
                 decoration: const InputDecoration(hintText: "Descrizione"),),
-              //punti
+              //count
+              Visibility(
+                visible: _isVisible,
+                child: Column(children: [
+                  const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('Numero ripetizioni: ',style: TextStyle(color: Colors.black, fontSize: 18),)),
+                  TextField(
+                    controller: controllerCount,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(hintText: "1"),),
+                ],),),
+              //points
               const Align(
                   alignment: Alignment.topLeft,
                   child: Text('Riconpensa: ',style: TextStyle(color: Colors.black, fontSize: 18),)),
@@ -73,7 +88,7 @@ class _AddQuestPageState extends State<AddQuestPage> {
                 divisions: 100,
                 label: _currentValueSlider.round().toString(),
               ),
-              //seleziona importanza
+              //select importance
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Align(
@@ -86,7 +101,7 @@ class _AddQuestPageState extends State<AddQuestPage> {
                     style: const TextStyle(color: Colors.black, fontSize: 20),
                     underline: Container(
                       height: 2,
-                      color: Colors.deepPurpleAccent,
+                      color: Colors.indigo,
                     ),
                     onChanged: (newValue) {
                       setState(() {
@@ -110,6 +125,18 @@ class _AddQuestPageState extends State<AddQuestPage> {
                   )
               ),
               const SelectColor(quest: null),
+
+              CheckboxListTile(
+                title: const Text("Quest infinita?",style: TextStyle(color: Colors.black, fontSize: 18),),
+                value: _isInfinite, onChanged: (bool? newValue)=>{
+                setState(() {
+                  _isInfinite = newValue;
+                },)
+              },
+                activeColor: Colors.white,
+                checkColor: Colors.indigo,
+              ),
+
           
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
