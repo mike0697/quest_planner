@@ -5,7 +5,6 @@ import 'package:quest_planner/screens/editQuestPage.dart';
 import '../../../models/quest.dart';
 import '../../../providers/UserProvider.dart';
 import '../../../providers/quest_database.dart';
-import '../../DialogEdit.dart';
 
 class CardQuest extends StatefulWidget {
   const CardQuest({super.key, required this.quest});
@@ -24,15 +23,6 @@ class _CardQuestState extends State<CardQuest> {
   //delete a note
   void deleteNote(int id) {
     context.read<QuestDatabase>().deleteNote(id);
-  }
-
-  void _showDialogEdit(BuildContext context, Quest quest) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return MyWidget(quest: quest);
-      },
-    );
   }
 
   @override

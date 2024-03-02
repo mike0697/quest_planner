@@ -4,7 +4,6 @@ import 'package:quest_planner/widgets/ListQuest/ListQuestInbox.dart';
 import 'package:quest_planner/widgets/ListQuest/ListQuestPriority.dart';
 import 'package:quest_planner/widgets/ListQuest/ListQuestSecondary.dart';
 import 'package:quest_planner/widgets/ListQuest/ListQuestUrgenti.dart';
-import '../widgets/addQuest.dart';
 import 'addQuestPage.dart';
 
 class QuestScreen extends StatefulWidget {
@@ -61,13 +60,4 @@ class _QuestScreenState extends State<QuestScreen> with TickerProviderStateMixin
       Navigator.push(context, MaterialPageRoute<void>(builder: (context) => AddQuestPage()));
     }, child: const Icon(Icons.add), ),
   );
-
-  void _showDialogAdd(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return addQuest();
-      },
-    );
-  }
 }
