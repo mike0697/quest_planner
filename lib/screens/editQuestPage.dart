@@ -19,8 +19,12 @@ class EditQuestPage extends StatefulWidget {
 class _AddQuestPageState extends State<EditQuestPage> {
   TextEditingController controllerTitle = TextEditingController();
   TextEditingController controllerDesc = TextEditingController();
+  TextEditingController controllerCount = TextEditingController();
   double _currentValueSlider = 1.0;
   String _selectedImportance= "";
+  int countExecutions = 0;
+  bool? _isInfinite = false;
+  bool _isVisible = true;
 
   @override
   void initState() {
@@ -36,6 +40,8 @@ class _AddQuestPageState extends State<EditQuestPage> {
     controllerTitle = TextEditingController(text: widget.quest.title);
     controllerDesc = TextEditingController(text: widget.quest.description);
     _currentValueSlider = widget.quest.points.toDouble();
+    countExecutions = widget.quest.countExecutions;
+    _isInfinite = widget.quest.infinity;
   }
   @override
   Widget build(BuildContext context) {
@@ -67,6 +73,19 @@ class _AddQuestPageState extends State<EditQuestPage> {
               TextField(
                 controller: controllerDesc,
                 decoration: const InputDecoration(hintText: "Descrizione"),),
+
+              Visibility(
+                visible: _isVisible,
+                child: Column(children: [
+                  const Align(
+                      alignment: Alignment.topLeft,
+                      child: Text('Numero ripetizioni: ',style: TextStyle(color: Colors.black, fontSize: 18),)),
+                  TextField(
+                    controller: controllerCount,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(hintText: 'Value : $countExecutions'),),
+                ],),),
+
               //punti
               const Align(
                   alignment: Alignment.topLeft,
@@ -118,6 +137,17 @@ class _AddQuestPageState extends State<EditQuestPage> {
               ),
               SelectColor(quest: widget.quest),
 
+              CheckboxListTile(
+                title: const Text("Quest infinita?",style: TextStyle(color: Colors.black, fontSize: 18),),
+                value: _isInfinite, onChanged: (bool? newValue)=>{
+                setState(() {
+                  _isInfinite = newValue;
+                },)
+              },
+                activeColor: Colors.white,
+                checkColor: Colors.indigo,
+              ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -134,7 +164,14 @@ class _AddQuestPageState extends State<EditQuestPage> {
                     child: TextButton(
                       child: const Text('Invia', style: TextStyle(fontSize: 18),),
                       onPressed: () {
-                        updateQuest(widget.quest, controllerTitle.text, controllerDesc.text, _currentValueSlider.toInt());
+                        if(controllerCount.text.isNotEmpty) {
+                          countExecutions = int.parse(controllerCount.text);
+                        }
+                        updateQuest(quest: widget.quest,
+                            title: controllerTitle.text,
+                            description: controllerDesc.text, point: _currentValueSlider.toInt(),
+                          countExecutions: countExecutions, infinity: _isInfinite!,
+                        );
                         Navigator.of(context).pop();},
                     ),
                   ),
@@ -147,9 +184,13 @@ class _AddQuestPageState extends State<EditQuestPage> {
       ),
     );
   }
-  void updateQuest(Quest quest, String title, String description, int point){
-    context.read<QuestDatabase>().updateQuest(id: quest.id, title: title, description: description,
+  void updateQuest({required Quest quest,required String title,required String description, required int point,
+  required int countExecutions,required bool infinity}){
+    context.read<QuestDatabase>().updateQuest(
+        id: quest.id, title: title, description: description,
         point: point,importance: _selectedImportance,
+        infinity: infinity,
+        countExecutions: countExecutions,
         color: (Provider.of<AddEditQuestProvider>(context, listen: false).myColor));
   }
 }

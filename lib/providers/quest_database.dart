@@ -114,17 +114,23 @@ class QuestDatabase extends ChangeNotifier {
   }
 
   //U P D A T E - a note in db
-  Future<void> updateQuest({required int id, required String title, required String description, required int point, required String importance,
+  Future<void> updateQuest({required int id, required String title, required String description,
+    required int point, required String importance,
+    required bool infinity,
+    required int countExecutions,
     String color = "",
   }) async{
-    final existingNote = await isar.quests.get(id);
-    if(existingNote != null){
-      existingNote.title = title;
-      existingNote.description = description;
-      existingNote.points = point;
-      existingNote.importance = importance;
-      existingNote.color = color;
-      await isar.writeTxn(() => isar.quests.put(existingNote));
+    final existingQuest = await isar.quests.get(id);
+    if(existingQuest != null){
+      existingQuest.title = title;
+      existingQuest.description = description;
+      existingQuest.points = point;
+      existingQuest.importance = importance;
+      existingQuest.color = color;
+      existingQuest.countExecutions = countExecutions;
+      existingQuest.infinity = infinity;
+
+      await isar.writeTxn(() => isar.quests.put(existingQuest));
       await fetchQuests();
       await fetchUrgenti();
       await fetchPrioritario();

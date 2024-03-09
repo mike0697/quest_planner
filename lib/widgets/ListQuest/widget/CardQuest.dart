@@ -62,7 +62,7 @@ class _CardQuestState extends State<CardQuest> {
     );
   }
 
-  //esegui note
+  //complete the quest
   void completeQuest(Quest quest) {
     context.read<UserProvider>().addPunti(quest.points);
     if(quest.infinity == false) {

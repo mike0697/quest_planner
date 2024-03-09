@@ -19,9 +19,9 @@ class _AddQuestPageState extends State<AddQuestPage> {
   TextEditingController controllerCount = TextEditingController();
   double _currentValueSlider = 1.0;
   String _selectedImportance= "Inbox";
-  int countExecutions = 0;
   bool? _isInfinite = false;
   bool _isVisible = true;
+  int countExecutions = 1;
 
   @override
   void initState() {
@@ -154,6 +154,9 @@ class _AddQuestPageState extends State<AddQuestPage> {
                     child: TextButton(
                       child: const Text('Invia', style: TextStyle(fontSize: 18),),
                       onPressed: () {
+                        if(controllerCount.text.isNotEmpty) {
+                          countExecutions = int.parse(controllerCount.text);
+                        }
                         context.read<QuestDatabase>().addQuest(
                             title: controllerTitle.text, description: controllerDesc.text,
                             points: _currentValueSlider.toInt(),
